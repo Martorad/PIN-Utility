@@ -32,6 +32,9 @@
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.lblOutput = new System.Windows.Forms.Label();
+            this.tbOutput = new System.Windows.Forms.TextBox();
+            this.cbOutput = new System.Windows.Forms.CheckBox();
             this.btnDone = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tbNumberOfCodes = new System.Windows.Forms.TextBox();
@@ -39,6 +42,9 @@
             this.tbPath = new System.Windows.Forms.TextBox();
             this.progressMain = new System.Windows.Forms.ProgressBar();
             this.tbMainInput = new System.Windows.Forms.TextBox();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.lblCodesPerMinute = new System.Windows.Forms.Label();
+            this.btnBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
@@ -54,27 +60,62 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 2000;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // pnlMain
             // 
+            this.pnlMain.Controls.Add(this.lblOutput);
+            this.pnlMain.Controls.Add(this.tbOutput);
+            this.pnlMain.Controls.Add(this.cbOutput);
             this.pnlMain.Controls.Add(this.btnDone);
             this.pnlMain.Controls.Add(this.label2);
             this.pnlMain.Controls.Add(this.tbNumberOfCodes);
             this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Controls.Add(this.tbPath);
-            this.pnlMain.Location = new System.Drawing.Point(798, 108);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(169, 136);
+            this.pnlMain.Size = new System.Drawing.Size(966, 353);
             this.pnlMain.TabIndex = 1;
+            // 
+            // lblOutput
+            // 
+            this.lblOutput.AutoSize = true;
+            this.lblOutput.Location = new System.Drawing.Point(12, 140);
+            this.lblOutput.Name = "lblOutput";
+            this.lblOutput.Size = new System.Drawing.Size(306, 17);
+            this.lblOutput.TabIndex = 7;
+            this.lblOutput.Text = "Please enter the desired path for the output file";
+            this.lblOutput.Visible = false;
+            // 
+            // tbOutput
+            // 
+            this.tbOutput.Location = new System.Drawing.Point(12, 160);
+            this.tbOutput.Name = "tbOutput";
+            this.tbOutput.Size = new System.Drawing.Size(477, 22);
+            this.tbOutput.TabIndex = 6;
+            this.tbOutput.Visible = false;
+            // 
+            // cbOutput
+            // 
+            this.cbOutput.AutoSize = true;
+            this.cbOutput.Checked = true;
+            this.cbOutput.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbOutput.Location = new System.Drawing.Point(12, 117);
+            this.cbOutput.Name = "cbOutput";
+            this.cbOutput.Size = new System.Drawing.Size(228, 21);
+            this.cbOutput.TabIndex = 4;
+            this.cbOutput.Text = "Save output file in parent folder";
+            this.cbOutput.UseVisualStyleBackColor = true;
+            this.cbOutput.CheckedChanged += new System.EventHandler(this.CbOutput_CheckedChanged);
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(12, 116);
+            this.btnDone.Location = new System.Drawing.Point(12, 290);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(477, 52);
-            this.btnDone.TabIndex = 4;
+            this.btnDone.TabIndex = 5;
             this.btnDone.Text = "Done";
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.BtnDone_Click);
@@ -84,9 +125,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(198, 17);
+            this.label2.Size = new System.Drawing.Size(229, 17);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Please enter number of codes";
+            this.label2.Text = "Please enter total number of codes";
             // 
             // tbNumberOfCodes
             // 
@@ -115,9 +156,10 @@
             // 
             // progressMain
             // 
-            this.progressMain.Location = new System.Drawing.Point(22, 264);
+            this.progressMain.Location = new System.Drawing.Point(22, 236);
             this.progressMain.Name = "progressMain";
             this.progressMain.Size = new System.Drawing.Size(920, 27);
+            this.progressMain.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressMain.TabIndex = 2;
             // 
             // tbMainInput
@@ -131,22 +173,55 @@
             this.tbMainInput.TabIndex = 3;
             this.tbMainInput.TextChanged += new System.EventHandler(this.TbMainInput_TextChanged);
             this.tbMainInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbMainInput_KeyDown);
-            this.tbMainInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbMainInput_KeyUp);
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.ForeColor = System.Drawing.Color.Black;
+            this.lblTime.Location = new System.Drawing.Point(889, 327);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(0, 17);
+            this.lblTime.TabIndex = 4;
+            this.lblTime.Click += new System.EventHandler(this.LblTime_Click);
+            // 
+            // lblCodesPerMinute
+            // 
+            this.lblCodesPerMinute.AutoSize = true;
+            this.lblCodesPerMinute.Location = new System.Drawing.Point(22, 270);
+            this.lblCodesPerMinute.Name = "lblCodesPerMinute";
+            this.lblCodesPerMinute.Size = new System.Drawing.Size(123, 17);
+            this.lblCodesPerMinute.TabIndex = 5;
+            this.lblCodesPerMinute.Text = "Codes per minute:";
+            // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(22, 146);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(42, 84);
+            this.btnBack.TabIndex = 6;
+            this.btnBack.Text = "<";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Honeydew;
             this.ClientSize = new System.Drawing.Size(966, 353);
+            this.Controls.Add(this.lblTime);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.progressMain);
             this.Controls.Add(this.tbMainInput);
+            this.Controls.Add(this.lblCodesPerMinute);
             this.Controls.Add(this.pbMain);
+            this.Controls.Add(this.btnBack);
+            this.MaximumSize = new System.Drawing.Size(984, 400);
+            this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Utility v0.1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
@@ -167,6 +242,12 @@
         private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.ProgressBar progressMain;
         private System.Windows.Forms.TextBox tbMainInput;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Label lblCodesPerMinute;
+        private System.Windows.Forms.CheckBox cbOutput;
+        private System.Windows.Forms.Label lblOutput;
+        private System.Windows.Forms.TextBox tbOutput;
+        private System.Windows.Forms.Button btnBack;
     }
 }
 
