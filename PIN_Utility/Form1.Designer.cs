@@ -32,11 +32,11 @@
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.tbPath = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnDone = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tbNumberOfCodes = new System.Windows.Forms.TextBox();
-            this.btnDone = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbPath = new System.Windows.Forms.TextBox();
             this.progressMain = new System.Windows.Forms.ProgressBar();
             this.tbMainInput = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
@@ -69,22 +69,15 @@
             this.pnlMain.Size = new System.Drawing.Size(169, 136);
             this.pnlMain.TabIndex = 1;
             // 
-            // tbPath
+            // btnDone
             // 
-            this.tbPath.Location = new System.Drawing.Point(12, 29);
-            this.tbPath.Name = "tbPath";
-            this.tbPath.Size = new System.Drawing.Size(477, 22);
-            this.tbPath.TabIndex = 0;
-            this.tbPath.Text = "C:\\Users\\marti\\Desktop\\PIN_images\\";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(379, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Please paste the folder path (please use an absolute path)";
+            this.btnDone.Location = new System.Drawing.Point(12, 116);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(477, 52);
+            this.btnDone.TabIndex = 4;
+            this.btnDone.Text = "Done";
+            this.btnDone.UseVisualStyleBackColor = true;
+            this.btnDone.Click += new System.EventHandler(this.BtnDone_Click);
             // 
             // label2
             // 
@@ -101,16 +94,24 @@
             this.tbNumberOfCodes.Name = "tbNumberOfCodes";
             this.tbNumberOfCodes.Size = new System.Drawing.Size(477, 22);
             this.tbNumberOfCodes.TabIndex = 2;
+            this.tbNumberOfCodes.Text = "105";
             // 
-            // btnDone
+            // label1
             // 
-            this.btnDone.Location = new System.Drawing.Point(12, 116);
-            this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(477, 52);
-            this.btnDone.TabIndex = 4;
-            this.btnDone.Text = "Done";
-            this.btnDone.UseVisualStyleBackColor = true;
-            this.btnDone.Click += new System.EventHandler(this.BtnDone_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(379, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Please paste the folder path (please use an absolute path)";
+            // 
+            // tbPath
+            // 
+            this.tbPath.Location = new System.Drawing.Point(12, 29);
+            this.tbPath.Name = "tbPath";
+            this.tbPath.Size = new System.Drawing.Size(477, 22);
+            this.tbPath.TabIndex = 0;
+            this.tbPath.Text = "C:\\Users\\marti\\Desktop\\PIN_images\\";
             // 
             // progressMain
             // 
@@ -122,13 +123,15 @@
             // tbMainInput
             // 
             this.tbMainInput.AcceptsReturn = true;
-            this.tbMainInput.Font = new System.Drawing.Font("Lucida Sans Typewriter", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbMainInput.Location = new System.Drawing.Point(22, 143);
+            this.tbMainInput.Font = new System.Drawing.Font("Lucida Sans Typewriter", 40.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbMainInput.Location = new System.Drawing.Point(70, 143);
+            this.tbMainInput.MaxLength = 19;
             this.tbMainInput.Name = "tbMainInput";
-            this.tbMainInput.Size = new System.Drawing.Size(920, 78);
+            this.tbMainInput.Size = new System.Drawing.Size(845, 87);
             this.tbMainInput.TabIndex = 3;
             this.tbMainInput.TextChanged += new System.EventHandler(this.TbMainInput_TextChanged);
             this.tbMainInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbMainInput_KeyDown);
+            this.tbMainInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbMainInput_KeyUp);
             // 
             // Form1
             // 

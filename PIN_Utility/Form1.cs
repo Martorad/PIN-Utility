@@ -19,6 +19,7 @@ namespace PIN_Utility
         UInt32 numberOfCodes = 0;
         int completedCodes = 0;
         bool complete = false;
+        bool userChange = false;
 
         public Form1()
         {
@@ -52,7 +53,10 @@ namespace PIN_Utility
         private void BtnDone_Click(object sender, EventArgs e)
         {
             if (tbPath.Text == "")
+            {
                 MessageBox.Show("Please fill in the path");
+                return;
+            }
             else if (!tbPath.Text.EndsWith(@"\"))
             {
                 MessageBox.Show(@"Please make sure the path ends with \");
@@ -62,7 +66,10 @@ namespace PIN_Utility
                 userPath = tbPath.Text;
 
             if (tbNumberOfCodes.Text == "")
+            {
                 MessageBox.Show("Please fill in the number of codes");
+                return;
+            }
             else
             {
                 try
@@ -92,17 +99,43 @@ namespace PIN_Utility
                 progressMain.Value = completedCodes;
                 tbMainInput.Clear();
             }
+            else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
+            {
+                string temp = tbMainInput.Text;
+                temp = temp.Substring(0, temp.Length - 2);
+                tbMainInput.Text = temp + " ";
+            }
+        }
+
+        private void TbMainInput_KeyUp(object sender, KeyEventArgs e)
+        {
+            
         }
 
         private void TbMainInput_TextChanged(object sender, EventArgs e)
         {
-
+            tbMainInput.Text = CheckText(tbMainInput.Text);
+            if (!userChange)
+            {
+                tbMainInput.Focus();
+                tbMainInput.SelectionStart = tbMainInput.Text.Length;
+            }
+            else
+            {
+                userChange = false;
+            }
         }
 
         private void UpdateImage()
         {
-
-            pbMain.BackgroundImage = Image.FromFile(path);
+            try
+            {
+                pbMain.BackgroundImage = Image.FromFile(path);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void Increment()
@@ -156,6 +189,56 @@ namespace PIN_Utility
                         footprint[1] + arrayPIN[0].ToString() + footprint[0];
                     break;
             }
+        }
+
+        private string CheckText(string input)
+        {
+            char lastChar;
+            if (input.Length > 0)
+                lastChar = input[input.Length - 1];
+            else
+                lastChar = '#';
+
+            input = input.ToUpper();
+            if (input.Contains("O"))
+                input = input.Replace("O", "0");
+
+            if (!IsValidCharacter(lastChar) && lastChar != '#')
+            {
+                input = input.Remove(input.Length - 1);
+                return null;
+            }
+
+            if (input.Replace(" ", String.Empty).Length % 4 == 0 && 
+                input.Replace(" ", String.Empty).Length < 16 &&
+                lastChar != '#')
+            {
+                try
+                {
+                    if (input[input.Length - 1] != ' ')
+                    {
+                        input += ' ';
+                    }
+                }
+                catch (IndexOutOfRangeException ioore)
+                {
+                    
+                }
+            }
+
+            Console.WriteLine(lastChar);
+
+            if (input.Length > 19)
+            {
+                input = input.Remove(input.Length - 1);
+            }
+
+            return input;
+        }
+
+        private bool IsValidCharacter(char c)
+        {
+            return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ';
         }
     }
 }
