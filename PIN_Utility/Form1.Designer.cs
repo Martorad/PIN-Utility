@@ -45,6 +45,10 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.lblCodesPerMinute = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
+            this.lblCopy = new System.Windows.Forms.Label();
+            this.cbOverlay = new System.Windows.Forms.CheckBox();
+            this.btnHelp = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
@@ -52,9 +56,9 @@
             // pbMain
             // 
             this.pbMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pbMain.Location = new System.Drawing.Point(22, 24);
+            this.pbMain.Location = new System.Drawing.Point(25, 24);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(920, 115);
+            this.pbMain.Size = new System.Drawing.Size(917, 115);
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             // 
@@ -195,13 +199,60 @@
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(22, 146);
+            this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(423, 269);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(42, 84);
+            this.btnBack.Size = new System.Drawing.Size(169, 47);
             this.btnBack.TabIndex = 6;
             this.btnBack.Text = "<";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
+            // 
+            // lblCopy
+            // 
+            this.lblCopy.AutoSize = true;
+            this.lblCopy.BackColor = System.Drawing.Color.Transparent;
+            this.lblCopy.Font = new System.Drawing.Font("OcrB", 40.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCopy.ForeColor = System.Drawing.Color.Red;
+            this.lblCopy.Location = new System.Drawing.Point(65, 70);
+            this.lblCopy.Name = "lblCopy";
+            this.lblCopy.Size = new System.Drawing.Size(0, 74);
+            this.lblCopy.TabIndex = 7;
+            // 
+            // cbOverlay
+            // 
+            this.cbOverlay.AutoSize = true;
+            this.cbOverlay.Checked = true;
+            this.cbOverlay.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbOverlay.Location = new System.Drawing.Point(22, 292);
+            this.cbOverlay.Name = "cbOverlay";
+            this.cbOverlay.Size = new System.Drawing.Size(107, 21);
+            this.cbOverlay.TabIndex = 8;
+            this.cbOverlay.Text = "Text overlay";
+            this.cbOverlay.UseVisualStyleBackColor = true;
+            this.cbOverlay.CheckedChanged += new System.EventHandler(this.CbOverlay_CheckedChanged);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHelp.Location = new System.Drawing.Point(598, 269);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(169, 47);
+            this.btnHelp.TabIndex = 9;
+            this.btnHelp.Text = "HELP";
+            this.btnHelp.UseVisualStyleBackColor = true;
+            this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Location = new System.Drawing.Point(773, 270);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(169, 46);
+            this.btnSave.TabIndex = 10;
+            this.btnSave.Text = "SAVE";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // Form1
             // 
@@ -214,13 +265,18 @@
             this.Controls.Add(this.progressMain);
             this.Controls.Add(this.tbMainInput);
             this.Controls.Add(this.lblCodesPerMinute);
-            this.Controls.Add(this.pbMain);
             this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.cbOverlay);
+            this.Controls.Add(this.btnHelp);
+            this.Controls.Add(this.lblCopy);
+            this.Controls.Add(this.pbMain);
+            this.Controls.Add(this.btnSave);
             this.MaximumSize = new System.Drawing.Size(984, 400);
             this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Utility v0.1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
@@ -248,6 +304,10 @@
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.TextBox tbOutput;
         private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Label lblCopy;
+        private System.Windows.Forms.CheckBox cbOverlay;
+        private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 

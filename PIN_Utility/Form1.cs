@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,13 @@ namespace PIN_Utility
         string outputPath = "";
         int[] arrayPIN = new int[3]; //0 is code index. 1 is row index. 2 is page index.
         UInt32 numberOfCodes = 0;
-        int completedCodes = 0;
+        int completedCodes;
         bool complete = false;
         bool userChange = false;
         int[] minutes = new int[2]; //0 is seconds, 1 is minutes.
         float codesPerMinute;
+
+        List<string> codes = new List<string>();
 
         public Form1()
         {
@@ -36,6 +39,12 @@ namespace PIN_Utility
             footprint[1] = "_";
             footprint[0] = ".16.png";
             minutes[1] = 1;
+
+            var pos = this.PointToScreen(lblCopy.Location);
+            pos = pbMain.PointToClient(pos);
+            lblCopy.Parent = pbMain;
+            lblCopy.Location = pos;
+            lblCopy.BackColor = Color.Transparent;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -103,24 +112,55 @@ namespace PIN_Utility
                     return;
                 }
                 else
-                    outputPath = tbOutput.Text;
+                    outputPath = tbOutput.Text + "output.txt";
             }
             else
-                outputPath = userPath;
+                outputPath = userPath + "output.txt";
 
             progressMain.Maximum = (int)numberOfCodes;
-            MakePath();
-            UpdateImage();
             pnlMain.Visible = false;
             pnlMain.Enabled = false;
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(outputPath))
+                {
+                    string temp = reader.ReadLine() ?? "";
+                    if (temp != "")
+                    {
+                        temp = temp.TrimStart('#');
+                        completedCodes = Convert.ToInt32(temp);
+                        for (int i = 0; i < completedCodes; i++)
+                        {
+                            Increment(false);
+                            codes.Add(reader.ReadLine());
+                        }
+                    }
+                }
+            }
+            catch (FileNotFoundException fnfe)
+            {
+                completedCodes = 0;
+            }
+            finally
+            {
+                progressMain.Value = completedCodes;
+                MakePath();
+                UpdateImage();
+            }
         }
 
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && tbMainInput.Text.Length == 19)
+            if (e.KeyCode == Keys.Space)
+            {
+                userChange = true;
+            }
+            else if (e.KeyCode == Keys.Enter && tbMainInput.Text.Length == 19)
             {
                 e.SuppressKeyPress = true;
-                Increment();
+                codes.Add(tbMainInput.Text);
+                Increment(true);
                 MakePath();
                 UpdateImage();
                 progressMain.Value = completedCodes;
@@ -130,6 +170,7 @@ namespace PIN_Utility
                     complete = true;
                     MessageBox.Show("All codes are done!");
                 }
+                lblCopy.Location = new Point(31, 35 - arrayPIN[0]);
             }
             else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
             {
@@ -160,6 +201,62 @@ namespace PIN_Utility
             UpdateImage();
             progressMain.Value = completedCodes;
             tbMainInput.Clear();
+            tbMainInput.Text = codes[completedCodes];
+            codes.Remove(codes.Last());
+        }
+
+        private void LblTime_Click(object sender, EventArgs e)
+        {
+            if (lblTime.ForeColor == Color.Black)
+                lblTime.ForeColor = Color.Honeydew;
+            else
+                lblTime.ForeColor = Color.Black;
+        }
+
+        private void CbOutput_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!cbOutput.Checked)
+            {
+                tbOutput.Visible = true;
+                lblOutput.Visible = true;
+            }
+            else
+            {
+                tbOutput.Visible = false;
+                lblOutput.Visible = false;
+            }
+        }
+
+        private void CbOverlay_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbOverlay.Checked)
+            {
+                lblCopy.Visible = true;
+            }
+            else
+            {
+                lblCopy.Visible = false;
+            }
+        }
+
+        private void BtnHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Write codes and click Return when done.\n" +
+                "The app will save everything automatically when closing the file.\n" +
+                "Alternatively, you can save manually by clicking the SAVE button.\n" +
+                "\nKnown bugs:\n" +
+                "Pressing space as the first character will cause an exception.\n" +
+                "Opening a saved file to continue working will break the Codes per minute value.");
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveToFile();
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            SaveToFile();
         }
 
         private void UpdateImage()
@@ -174,7 +271,7 @@ namespace PIN_Utility
             }
         }
 
-        private void Increment()
+        private void Increment(bool incrementCompletedCodes)
         {
             if (!complete)
             {
@@ -189,7 +286,10 @@ namespace PIN_Utility
                     arrayPIN[1] = 1;
                     arrayPIN[2]++;
                 }
-                completedCodes++;
+                if (incrementCompletedCodes)
+                {
+                    completedCodes++;
+                }
             }
         }
 
@@ -250,7 +350,14 @@ namespace PIN_Utility
             else
                 lastChar = '#';
 
+            if (lastChar == ' ' && userChange == true)
+            {
+                input = input.Remove(input.Length - 1);
+                //userChange = false;
+            }
+
             input = input.ToUpper();
+
             if (input.Contains("O"))
                 input = input.Replace("O", "0");
 
@@ -282,6 +389,8 @@ namespace PIN_Utility
                 input = input.Remove(input.Length - 1);
             }
 
+            lblCopy.Text = tbMainInput.Text;
+
             return input;
         }
 
@@ -290,25 +399,21 @@ namespace PIN_Utility
             return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ';
         }
 
-        private void LblTime_Click(object sender, EventArgs e)
+        private void SaveToFile()
         {
-            if (lblTime.ForeColor == Color.Black)
-                lblTime.ForeColor = Color.Honeydew;
-            else
-                lblTime.ForeColor = Color.Black;
-        }
-
-        private void CbOutput_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!cbOutput.Checked)
+            if (!pnlMain.Visible)
             {
-                tbOutput.Visible = true;
-                lblOutput.Visible = true;
-            }
-            else
-            {
-                tbOutput.Visible = false;
-                lblOutput.Visible = false;
+                File.Delete(outputPath);
+                using (StreamWriter writer = new StreamWriter(outputPath))
+                {
+                    writer.WriteLine("#" + completedCodes.ToString());
+                    foreach (string code in codes)
+                    {
+                        writer.WriteLine(code);
+                    }
+                    writer.Close();
+                    writer.Dispose();
+                }
             }
         }
     }
