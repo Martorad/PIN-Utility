@@ -146,9 +146,9 @@
             // progressMain
             // 
             this.progressMain.Location = new System.Drawing.Point(22, 236);
+            this.progressMain.MarqueeAnimationSpeed = 0;
             this.progressMain.Name = "progressMain";
             this.progressMain.Size = new System.Drawing.Size(920, 27);
-            this.progressMain.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressMain.TabIndex = 2;
             // 
             // tbMainInput

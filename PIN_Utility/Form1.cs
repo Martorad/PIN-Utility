@@ -19,7 +19,6 @@ namespace PIN_Utility
         string outputPath = "";
 
         int[] arrayPIN = new int[3]; //0 is code index. 1 is row index. 2 is page index.
-        int[] minutes = new int[2]; //0 is seconds, 1 is minutes.
         uint numberOfCodes = 0;
         int completedCodes;
 
@@ -30,6 +29,8 @@ namespace PIN_Utility
         float codesPerMinute;
 
         List<string> codes = new List<string>();
+
+        DateTime startingTime = new DateTime();
 
         public Form1()
         {
@@ -42,7 +43,6 @@ namespace PIN_Utility
             footprint[2] = "_";
             footprint[1] = "_";
             footprint[0] = ".16.png";
-            minutes[1] = 1;
 
             var pos = this.PointToScreen(lblOverlay.Location);
             pos = pbMain.PointToClient(pos);
@@ -59,24 +59,19 @@ namespace PIN_Utility
         private void Timer1_Tick(object sender, EventArgs e)
         {
             lblTime.Text = DateTime.Now.ToString("HH:MM:ss");
-            minutes[0]++;
-            if (minutes[0] > 59)
+            if ((DateTime.Now.Second - startingTime.Second) % 15 == 0  && newCode)
             {
-                if (minutes[0] % 15 == 0 && newCode)
-                {
-                    SaveToFile();
-                    newCode = false;
-                }
-                minutes[0] = 0;
-                minutes[1]++;
+                SaveToFile();
+                newCode = false;
             }
-            codesPerMinute = completedCodes / minutes[1];
+            codesPerMinute = completedCodes / ((DateTime.Now.Minute + 1) - startingTime.Minute);
             lblCodesPerMinute.Text = $"Codes per minute: {codesPerMinute}";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Size = MinimumSize;
+            startingTime = DateTime.Now;
         }
 
         private void BtnDone_Click(object sender, EventArgs e)
@@ -151,9 +146,18 @@ namespace PIN_Utility
             }
             finally
             {
+                if (completedCodes == numberOfCodes)
+                {
+                    complete = true;
+                    MessageBox.Show("This folder is already complete!");
+                }
+                else
+                {
+                    MakePath();
+                    UpdateImage();
+                    CheckBtnBackAvailability();
+                }
                 progressMain.Value = completedCodes;
-                MakePath();
-                UpdateImage();
             }
         }
 
@@ -169,19 +173,18 @@ namespace PIN_Utility
                 codes.Add(tbMainInput.Text);
                 Increment(true);
                 MakePath();
-                UpdateImage();
+                if (!complete) 
+                    UpdateImage();
                 progressMain.Value = completedCodes;
                 tbMainInput.Clear();
                 if (completedCodes == numberOfCodes)
                 {
                     complete = true;
                     MessageBox.Show("All codes are done!");
+                    SaveToFile();
                 }
                 newCode = true;
-                if (completedCodes > 0)
-                    btnBack.Enabled = true;
-                else
-                    btnBack.Enabled = false;
+                CheckBtnBackAvailability();
             }
             else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
             {
@@ -210,10 +213,7 @@ namespace PIN_Utility
             Decrement();
             MakePath();
             UpdateImage();
-            if (completedCodes > 0)
-                btnBack.Enabled = true;
-            else
-                btnBack.Enabled = false;
+            CheckBtnBackAvailability();
             progressMain.Value = completedCodes;
             tbMainInput.Clear();
             tbMainInput.Text = codes[completedCodes];
@@ -451,6 +451,14 @@ namespace PIN_Utility
                     writer.Dispose();
                 }
             }
+        }
+
+        private void CheckBtnBackAvailability()
+        {
+            if (completedCodes > 0)
+                btnBack.Enabled = true;
+            else
+                btnBack.Enabled = false;
         }
     }
 }
