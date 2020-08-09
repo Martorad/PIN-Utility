@@ -79,7 +79,8 @@
             this.pnlMain.Controls.Add(this.btnDone);
             this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Controls.Add(this.tbPath);
-            this.pnlMain.Location = new System.Drawing.Point(175, 292);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(966, 353);
             this.pnlMain.TabIndex = 1;
@@ -316,7 +317,7 @@
             this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v0.2";
+            this.Text = "PIN Utility v0.2.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
