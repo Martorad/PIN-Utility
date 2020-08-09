@@ -40,19 +40,27 @@ namespace PIN_Utility
             footprint[0] = ".16.png";
             minutes[1] = 1;
 
-            var pos = this.PointToScreen(lblCopy.Location);
+            var pos = this.PointToScreen(lblOverlay.Location);
             pos = pbMain.PointToClient(pos);
-            lblCopy.Parent = pbMain;
-            lblCopy.Location = pos;
-            lblCopy.BackColor = Color.Transparent;
+            lblOverlay.Parent = pbMain;
+            lblOverlay.Location = pos;
+            lblOverlay.BackColor = Color.Transparent;
+            lblOverlay.Font = new Font(lblOverlay.Font.FontFamily, 40.6f);
+
+            Point pt = pbMain.PointToClient(lblOverlay.PointToScreen(new Point(0, 0)));
+            lblOverlay.Location = pt;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
             lblTime.Text = DateTime.Now.ToString("HH:MM:ss");
             minutes[0]++;
-            if (minutes[0] > 60)
+            if (minutes[0] > 59)
             {
+                if (minutes[0] % 15 == 0)
+                {
+                    SaveToFile();
+                }
                 minutes[0] = 0;
                 minutes[1]++;
             }
@@ -82,21 +90,13 @@ namespace PIN_Utility
             else
                 userPath = tbPath.Text;
 
-            if (tbNumberOfCodes.Text == "")
+            try
             {
-                MessageBox.Show("Please fill in the number of codes");
-                return;
+                numberOfCodes = (uint)Directory.GetFiles(userPath.Remove(userPath.Length - 1)).Length;
             }
-            else
+            catch (FileNotFoundException fnfe)
             {
-                try
-                {
-                    numberOfCodes = (UInt32)Convert.ToInt32(tbNumberOfCodes.Text);
-                }
-                catch (FormatException fe)
-                {
-                    MessageBox.Show("Please make sure the number of codes is in the correct format\n" + fe.Message);
-                }
+                MessageBox.Show("Files could not be loaded. Please restart the app and try again.\n" + fnfe.Message);
             }
 
             if (!cbOutput.Checked)
@@ -135,6 +135,7 @@ namespace PIN_Utility
                             Increment(false);
                             codes.Add(reader.ReadLine());
                         }
+                        numberOfCodes--;
                     }
                 }
             }
@@ -147,6 +148,7 @@ namespace PIN_Utility
                 progressMain.Value = completedCodes;
                 MakePath();
                 UpdateImage();
+                Console.WriteLine(numberOfCodes);
             }
         }
 
@@ -170,7 +172,7 @@ namespace PIN_Utility
                     complete = true;
                     MessageBox.Show("All codes are done!");
                 }
-                lblCopy.Location = new Point(31, 35 - arrayPIN[0]);
+                lblOverlay.Location = new Point(31, 35 - arrayPIN[0]);
             }
             else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
             {
@@ -231,11 +233,11 @@ namespace PIN_Utility
         {
             if (cbOverlay.Checked)
             {
-                lblCopy.Visible = true;
+                lblOverlay.Visible = true;
             }
             else
             {
-                lblCopy.Visible = false;
+                lblOverlay.Visible = false;
             }
         }
 
@@ -389,7 +391,7 @@ namespace PIN_Utility
                 input = input.Remove(input.Length - 1);
             }
 
-            lblCopy.Text = tbMainInput.Text;
+            lblOverlay.Text = tbMainInput.Text;
 
             return input;
         }
@@ -414,6 +416,27 @@ namespace PIN_Utility
                     writer.Close();
                     writer.Dispose();
                 }
+            }
+        }
+
+        private void btnAll_Click(object sender, EventArgs e)
+        {
+            int jump = Control.ModifierKeys == Keys.Shift ? 3 : 1;
+            if (sender == btnLeft)
+            {
+                lblOverlay.Left -= jump;
+            }
+            else if (sender == btnRight)
+            {
+                lblOverlay.Left += jump;
+            }
+            else if (sender == btnUp)
+            {
+                lblOverlay.Top -= jump;
+            }
+            else if (sender == btnDown)
+            {
+                lblOverlay.Top += jump;
             }
         }
     }

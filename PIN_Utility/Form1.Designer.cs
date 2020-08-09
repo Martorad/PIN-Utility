@@ -36,8 +36,6 @@
             this.tbOutput = new System.Windows.Forms.TextBox();
             this.cbOutput = new System.Windows.Forms.CheckBox();
             this.btnDone = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbNumberOfCodes = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbPath = new System.Windows.Forms.TextBox();
             this.progressMain = new System.Windows.Forms.ProgressBar();
@@ -45,12 +43,18 @@
             this.lblTime = new System.Windows.Forms.Label();
             this.lblCodesPerMinute = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
-            this.lblCopy = new System.Windows.Forms.Label();
+            this.lblOverlay = new System.Windows.Forms.Label();
             this.cbOverlay = new System.Windows.Forms.CheckBox();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnDown = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnRight = new System.Windows.Forms.Button();
+            this.btnLeft = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pnlMain.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbMain
@@ -73,8 +77,6 @@
             this.pnlMain.Controls.Add(this.tbOutput);
             this.pnlMain.Controls.Add(this.cbOutput);
             this.pnlMain.Controls.Add(this.btnDone);
-            this.pnlMain.Controls.Add(this.label2);
-            this.pnlMain.Controls.Add(this.tbNumberOfCodes);
             this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Controls.Add(this.tbPath);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -86,7 +88,7 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(12, 140);
+            this.lblOutput.Location = new System.Drawing.Point(12, 81);
             this.lblOutput.Name = "lblOutput";
             this.lblOutput.Size = new System.Drawing.Size(306, 17);
             this.lblOutput.TabIndex = 7;
@@ -95,7 +97,7 @@
             // 
             // tbOutput
             // 
-            this.tbOutput.Location = new System.Drawing.Point(12, 160);
+            this.tbOutput.Location = new System.Drawing.Point(12, 101);
             this.tbOutput.Name = "tbOutput";
             this.tbOutput.Size = new System.Drawing.Size(477, 22);
             this.tbOutput.TabIndex = 6;
@@ -106,7 +108,7 @@
             this.cbOutput.AutoSize = true;
             this.cbOutput.Checked = true;
             this.cbOutput.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOutput.Location = new System.Drawing.Point(12, 117);
+            this.cbOutput.Location = new System.Drawing.Point(12, 58);
             this.cbOutput.Name = "cbOutput";
             this.cbOutput.Size = new System.Drawing.Size(228, 21);
             this.cbOutput.TabIndex = 4;
@@ -123,23 +125,6 @@
             this.btnDone.Text = "Done";
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.BtnDone_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(229, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Please enter total number of codes";
-            // 
-            // tbNumberOfCodes
-            // 
-            this.tbNumberOfCodes.Location = new System.Drawing.Point(12, 78);
-            this.tbNumberOfCodes.Name = "tbNumberOfCodes";
-            this.tbNumberOfCodes.Size = new System.Drawing.Size(477, 22);
-            this.tbNumberOfCodes.TabIndex = 2;
-            this.tbNumberOfCodes.Text = "105";
             // 
             // label1
             // 
@@ -208,16 +193,16 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
-            // lblCopy
+            // lblOverlay
             // 
-            this.lblCopy.AutoSize = true;
-            this.lblCopy.BackColor = System.Drawing.Color.Transparent;
-            this.lblCopy.Font = new System.Drawing.Font("OcrB", 40.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCopy.ForeColor = System.Drawing.Color.Red;
-            this.lblCopy.Location = new System.Drawing.Point(65, 70);
-            this.lblCopy.Name = "lblCopy";
-            this.lblCopy.Size = new System.Drawing.Size(0, 74);
-            this.lblCopy.TabIndex = 7;
+            this.lblOverlay.AutoSize = true;
+            this.lblOverlay.BackColor = System.Drawing.Color.Transparent;
+            this.lblOverlay.Font = new System.Drawing.Font("OcrB", 40.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOverlay.ForeColor = System.Drawing.Color.Red;
+            this.lblOverlay.Location = new System.Drawing.Point(65, 70);
+            this.lblOverlay.Name = "lblOverlay";
+            this.lblOverlay.Size = new System.Drawing.Size(0, 73);
+            this.lblOverlay.TabIndex = 7;
             // 
             // cbOverlay
             // 
@@ -254,6 +239,61 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnDown);
+            this.groupBox1.Controls.Add(this.btnUp);
+            this.groupBox1.Controls.Add(this.btnRight);
+            this.groupBox1.Controls.Add(this.btnLeft);
+            this.groupBox1.Location = new System.Drawing.Point(255, 270);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(162, 74);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Adjust text overlay";
+            // 
+            // btnDown
+            // 
+            this.btnDown.Location = new System.Drawing.Point(57, 44);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(49, 24);
+            this.btnDown.TabIndex = 3;
+            this.btnDown.Text = "\\/";
+            this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnAll_Click);
+            // 
+            // btnUp
+            // 
+            this.btnUp.Location = new System.Drawing.Point(57, 21);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(49, 22);
+            this.btnUp.TabIndex = 2;
+            this.btnUp.Text = "/\\";
+            this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnAll_Click);
+            // 
+            // btnRight
+            // 
+            this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRight.Location = new System.Drawing.Point(108, 21);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(49, 47);
+            this.btnRight.TabIndex = 1;
+            this.btnRight.Text = ">";
+            this.btnRight.UseVisualStyleBackColor = true;
+            this.btnRight.Click += new System.EventHandler(this.btnAll_Click);
+            // 
+            // btnLeft
+            // 
+            this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeft.Location = new System.Drawing.Point(6, 21);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(49, 47);
+            this.btnLeft.TabIndex = 0;
+            this.btnLeft.Text = "<";
+            this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Click += new System.EventHandler(this.btnAll_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -268,19 +308,21 @@
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.cbOverlay);
             this.Controls.Add(this.btnHelp);
-            this.Controls.Add(this.lblCopy);
+            this.Controls.Add(this.lblOverlay);
             this.Controls.Add(this.pbMain);
             this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.groupBox1);
             this.MaximumSize = new System.Drawing.Size(984, 400);
             this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v0.1";
+            this.Text = "PIN Utility v0.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,8 +333,6 @@
         private System.Windows.Forms.PictureBox pbMain;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel pnlMain;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbNumberOfCodes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbPath;
         private System.Windows.Forms.Button btnDone;
@@ -304,10 +344,15 @@
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.TextBox tbOutput;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Label lblCopy;
+        private System.Windows.Forms.Label lblOverlay;
         private System.Windows.Forms.CheckBox cbOverlay;
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnDown;
+        private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnRight;
+        private System.Windows.Forms.Button btnLeft;
     }
 }
 
