@@ -79,8 +79,7 @@
             this.pnlMain.Controls.Add(this.btnDone);
             this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Controls.Add(this.tbPath);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Location = new System.Drawing.Point(175, 292);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(966, 353);
             this.pnlMain.TabIndex = 1;
@@ -154,11 +153,11 @@
             // tbMainInput
             // 
             this.tbMainInput.AcceptsReturn = true;
-            this.tbMainInput.Font = new System.Drawing.Font("Lucida Sans Typewriter", 40.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbMainInput.Location = new System.Drawing.Point(70, 143);
+            this.tbMainInput.Font = new System.Drawing.Font("OcrB", 42F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbMainInput.Location = new System.Drawing.Point(72, 143);
             this.tbMainInput.MaxLength = 19;
             this.tbMainInput.Name = "tbMainInput";
-            this.tbMainInput.Size = new System.Drawing.Size(845, 87);
+            this.tbMainInput.Size = new System.Drawing.Size(843, 87);
             this.tbMainInput.TabIndex = 3;
             this.tbMainInput.TextChanged += new System.EventHandler(this.TbMainInput_TextChanged);
             this.tbMainInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbMainInput_KeyDown);
@@ -184,6 +183,7 @@
             // 
             // btnBack
             // 
+            this.btnBack.Enabled = false;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.Location = new System.Drawing.Point(423, 269);
             this.btnBack.Name = "btnBack";
@@ -201,7 +201,7 @@
             this.lblOverlay.ForeColor = System.Drawing.Color.Red;
             this.lblOverlay.Location = new System.Drawing.Point(65, 70);
             this.lblOverlay.Name = "lblOverlay";
-            this.lblOverlay.Size = new System.Drawing.Size(0, 73);
+            this.lblOverlay.Size = new System.Drawing.Size(0, 74);
             this.lblOverlay.TabIndex = 7;
             // 
             // cbOverlay

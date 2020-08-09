@@ -17,12 +17,16 @@ namespace PIN_Utility
         string[] footprint = new string[4];
         string path = "";
         string outputPath = "";
+
         int[] arrayPIN = new int[3]; //0 is code index. 1 is row index. 2 is page index.
-        UInt32 numberOfCodes = 0;
+        int[] minutes = new int[2]; //0 is seconds, 1 is minutes.
+        uint numberOfCodes = 0;
         int completedCodes;
+
         bool complete = false;
         bool userChange = false;
-        int[] minutes = new int[2]; //0 is seconds, 1 is minutes.
+        bool newCode = false;
+        
         float codesPerMinute;
 
         List<string> codes = new List<string>();
@@ -46,6 +50,7 @@ namespace PIN_Utility
             lblOverlay.Location = pos;
             lblOverlay.BackColor = Color.Transparent;
             lblOverlay.Font = new Font(lblOverlay.Font.FontFamily, 40.6f);
+            tbMainInput.Font = new Font(tbMainInput.Font.FontFamily, 41.6f);
 
             Point pt = pbMain.PointToClient(lblOverlay.PointToScreen(new Point(0, 0)));
             lblOverlay.Location = pt;
@@ -57,9 +62,10 @@ namespace PIN_Utility
             minutes[0]++;
             if (minutes[0] > 59)
             {
-                if (minutes[0] % 15 == 0)
+                if (minutes[0] % 15 == 0 && newCode)
                 {
                     SaveToFile();
+                    newCode = false;
                 }
                 minutes[0] = 0;
                 minutes[1]++;
@@ -148,7 +154,6 @@ namespace PIN_Utility
                 progressMain.Value = completedCodes;
                 MakePath();
                 UpdateImage();
-                Console.WriteLine(numberOfCodes);
             }
         }
 
@@ -172,7 +177,11 @@ namespace PIN_Utility
                     complete = true;
                     MessageBox.Show("All codes are done!");
                 }
-                lblOverlay.Location = new Point(31, 35 - arrayPIN[0]);
+                newCode = true;
+                if (completedCodes > 0)
+                    btnBack.Enabled = true;
+                else
+                    btnBack.Enabled = false;
             }
             else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
             {
@@ -201,6 +210,10 @@ namespace PIN_Utility
             Decrement();
             MakePath();
             UpdateImage();
+            if (completedCodes > 0)
+                btnBack.Enabled = true;
+            else
+                btnBack.Enabled = false;
             progressMain.Value = completedCodes;
             tbMainInput.Clear();
             tbMainInput.Text = codes[completedCodes];
@@ -261,6 +274,27 @@ namespace PIN_Utility
             SaveToFile();
         }
 
+        private void btnAll_Click(object sender, EventArgs e)
+        {
+            int jump = Control.ModifierKeys == Keys.Shift ? 3 : 1;
+            if (sender == btnLeft)
+            {
+                lblOverlay.Left -= jump;
+            }
+            else if (sender == btnRight)
+            {
+                lblOverlay.Left += jump;
+            }
+            else if (sender == btnUp)
+            {
+                lblOverlay.Top -= jump;
+            }
+            else if (sender == btnDown)
+            {
+                lblOverlay.Top += jump;
+            }
+        }
+
         private void UpdateImage()
         {
             try
@@ -269,7 +303,7 @@ namespace PIN_Utility
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show("Could not find " + e.Message);
             }
         }
 
@@ -369,8 +403,8 @@ namespace PIN_Utility
                 return input;
             }
 
-            if (input.Replace(" ", String.Empty).Length % 4 == 0 && 
-                input.Replace(" ", String.Empty).Length < 16 &&
+            if (input.Replace(" ", string.Empty).Length % 4 == 0 && 
+                input.Replace(" ", string.Empty).Length < 16 &&
                 lastChar != '#')
             {
                 try
@@ -416,27 +450,6 @@ namespace PIN_Utility
                     writer.Close();
                     writer.Dispose();
                 }
-            }
-        }
-
-        private void btnAll_Click(object sender, EventArgs e)
-        {
-            int jump = Control.ModifierKeys == Keys.Shift ? 3 : 1;
-            if (sender == btnLeft)
-            {
-                lblOverlay.Left -= jump;
-            }
-            else if (sender == btnRight)
-            {
-                lblOverlay.Left += jump;
-            }
-            else if (sender == btnUp)
-            {
-                lblOverlay.Top -= jump;
-            }
-            else if (sender == btnDown)
-            {
-                lblOverlay.Top += jump;
             }
         }
     }
