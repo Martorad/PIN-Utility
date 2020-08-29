@@ -14,8 +14,6 @@ namespace PIN_Utility
     public partial class Form1 : Form
     {
         string userPath = "";
-        string[] footprint = new string[4];
-        string path = "";
         string outputPath = "";
 
         int[] arrayPIN = new int[3]; //0 is code index. 1 is row index. 2 is page index.
@@ -25,24 +23,15 @@ namespace PIN_Utility
         bool complete = false;
         bool userChange = false;
         bool newCode = false;
-        
-        float codesPerMinute;
 
         List<string> codes = new List<string>();
+        List<string> paths = new List<string>();
 
         DateTime startingTime = new DateTime();
 
         public Form1()
         {
             InitializeComponent();
-            for (int i = 0; i < 3; i++)
-            {
-                arrayPIN[i] = 1;
-            }
-            footprint[3] = "PIN_";
-            footprint[2] = "_";
-            footprint[1] = "_";
-            footprint[0] = ".16.png";
 
             var pos = this.PointToScreen(lblOverlay.Location);
             pos = pbMain.PointToClient(pos);
@@ -64,8 +53,6 @@ namespace PIN_Utility
                 SaveToFile();
                 newCode = false;
             }
-            codesPerMinute = completedCodes / ((DateTime.Now.Minute + 1) - startingTime.Minute);
-            lblCodesPerMinute.Text = $"Codes per minute: {codesPerMinute}";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -76,28 +63,30 @@ namespace PIN_Utility
 
         private void BtnDone_Click(object sender, EventArgs e)
         {
-            timer1.Start();
-            Size = new Size(984, 400);
             if (tbPath.Text == "")
             {
                 MessageBox.Show("Please fill in the path");
                 return;
             }
-            else if (!tbPath.Text.EndsWith(@"\"))
-            {
-                MessageBox.Show(@"Please make sure the path ends with \");
-                return;
-            }
             else
                 userPath = tbPath.Text;
 
+            DirectoryInfo d = new DirectoryInfo(userPath);
+            FileInfo[] Files = d.GetFiles("*.png");
+
+            foreach (FileInfo file in Files)
+            {
+                paths.Add(file.FullName);
+            }
+
             try
             {
-                numberOfCodes = (uint)Directory.GetFiles(userPath.Remove(userPath.Length - 1)).Length;
+                numberOfCodes = (uint)Directory.GetFiles(userPath).Length;
             }
-            catch (FileNotFoundException fnfe)
+            catch (DirectoryNotFoundException dnfe)
             {
-                MessageBox.Show("Files could not be loaded. Please restart the app and try again.\n" + fnfe.Message);
+                MessageBox.Show("Files could not be loaded. Please restart the app and try again.\n" + dnfe.Message);
+                Close();
             }
 
             if (!cbOutput.Checked)
@@ -116,7 +105,7 @@ namespace PIN_Utility
                     outputPath = tbOutput.Text + "output.txt";
             }
             else
-                outputPath = userPath + "output.txt";
+                outputPath = userPath + "/output.txt";
 
             progressMain.Maximum = (int)numberOfCodes;
             pnlMain.Visible = false;
@@ -140,7 +129,7 @@ namespace PIN_Utility
                     }
                 }
             }
-            catch (FileNotFoundException fnfe)
+            catch (FileNotFoundException)
             {
                 completedCodes = 0;
             }
@@ -153,12 +142,14 @@ namespace PIN_Utility
                 }
                 else
                 {
-                    MakePath();
+                    //MakePath();
                     UpdateImage();
                     CheckBtnBackAvailability();
                 }
                 progressMain.Value = completedCodes;
             }
+            timer1.Start();
+            Size = new Size(984, 400);
         }
 
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
@@ -172,7 +163,7 @@ namespace PIN_Utility
                 e.SuppressKeyPress = true;
                 codes.Add(tbMainInput.Text);
                 Increment(true);
-                MakePath();
+                //MakePath();
                 if (!complete) 
                     UpdateImage();
                 progressMain.Value = completedCodes;
@@ -211,7 +202,7 @@ namespace PIN_Utility
         private void BtnBack_Click(object sender, EventArgs e)
         {
             Decrement();
-            MakePath();
+            //MakePath();
             UpdateImage();
             CheckBtnBackAvailability();
             progressMain.Value = completedCodes;
@@ -297,9 +288,13 @@ namespace PIN_Utility
 
         private void UpdateImage()
         {
+            if (!(completedCodes < numberOfCodes))
+            {
+                return;
+            }
             try
             {
-                pbMain.BackgroundImage = Image.FromFile(path);
+                pbMain.BackgroundImage = Image.FromFile(paths[completedCodes]);
             }
             catch (Exception e)
             {
@@ -351,33 +346,6 @@ namespace PIN_Utility
             }
         }
 
-        private void MakePath()
-        {
-            switch (arrayPIN[2])
-            {
-                case int n when (n < 10):
-                    path = userPath + footprint[3] + "0000" + arrayPIN[2].ToString() + footprint[2] + arrayPIN[1].ToString() +
-                        footprint[1] + arrayPIN[0].ToString() + footprint[0];
-                    break;
-                case int n when (n < 100):
-                    path = userPath + footprint[3] + "000" + arrayPIN[2].ToString() + footprint[2] + arrayPIN[1].ToString() +
-                        footprint[1] + arrayPIN[0].ToString() + footprint[0];
-                    break;
-                case int n when (n < 1000):
-                    path = userPath + footprint[3] + "00" + arrayPIN[2].ToString() + footprint[2] + arrayPIN[1].ToString() +
-                        footprint[1] + arrayPIN[0].ToString() + footprint[0];
-                    break;
-                case int n when (n < 10000):
-                    path = userPath + footprint[3] + "0" + arrayPIN[2].ToString() + footprint[2] + arrayPIN[1].ToString() +
-                        footprint[1] + arrayPIN[0].ToString() + footprint[0];
-                    break;
-                default:
-                    path = userPath + footprint[3] + arrayPIN[2].ToString() + footprint[2] + arrayPIN[1].ToString() +
-                        footprint[1] + arrayPIN[0].ToString() + footprint[0];
-                    break;
-            }
-        }
-
         private string CheckText(string input)
         {
             char lastChar;
@@ -414,9 +382,9 @@ namespace PIN_Utility
                         input += ' ';
                     }
                 }
-                catch (IndexOutOfRangeException ioore)
+                catch (IndexOutOfRangeException)
                 {
-                    
+
                 }
             }
 

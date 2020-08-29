@@ -41,7 +41,6 @@
             this.progressMain = new System.Windows.Forms.ProgressBar();
             this.tbMainInput = new System.Windows.Forms.TextBox();
             this.lblTime = new System.Windows.Forms.Label();
-            this.lblCodesPerMinute = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
             this.lblOverlay = new System.Windows.Forms.Label();
             this.cbOverlay = new System.Windows.Forms.CheckBox();
@@ -110,9 +109,9 @@
             this.cbOutput.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbOutput.Location = new System.Drawing.Point(12, 58);
             this.cbOutput.Name = "cbOutput";
-            this.cbOutput.Size = new System.Drawing.Size(228, 21);
+            this.cbOutput.Size = new System.Drawing.Size(221, 21);
             this.cbOutput.TabIndex = 4;
-            this.cbOutput.Text = "Save output file in parent folder";
+            this.cbOutput.Text = "Save output file in same folder";
             this.cbOutput.UseVisualStyleBackColor = true;
             this.cbOutput.CheckedChanged += new System.EventHandler(this.CbOutput_CheckedChanged);
             // 
@@ -141,7 +140,7 @@
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(477, 22);
             this.tbPath.TabIndex = 0;
-            this.tbPath.Text = "C:\\Users\\marti\\Desktop\\PIN_images\\";
+            this.tbPath.Text = "C:\\Users\\marti\\Desktop\\PIN_images";
             // 
             // progressMain
             // 
@@ -173,15 +172,6 @@
             this.lblTime.TabIndex = 4;
             this.lblTime.Click += new System.EventHandler(this.LblTime_Click);
             // 
-            // lblCodesPerMinute
-            // 
-            this.lblCodesPerMinute.AutoSize = true;
-            this.lblCodesPerMinute.Location = new System.Drawing.Point(22, 270);
-            this.lblCodesPerMinute.Name = "lblCodesPerMinute";
-            this.lblCodesPerMinute.Size = new System.Drawing.Size(123, 17);
-            this.lblCodesPerMinute.TabIndex = 5;
-            this.lblCodesPerMinute.Text = "Codes per minute:";
-            // 
             // btnBack
             // 
             this.btnBack.Enabled = false;
@@ -210,7 +200,7 @@
             this.cbOverlay.AutoSize = true;
             this.cbOverlay.Checked = true;
             this.cbOverlay.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOverlay.Location = new System.Drawing.Point(22, 292);
+            this.cbOverlay.Location = new System.Drawing.Point(22, 270);
             this.cbOverlay.Name = "cbOverlay";
             this.cbOverlay.Size = new System.Drawing.Size(107, 21);
             this.cbOverlay.TabIndex = 8;
@@ -305,7 +295,6 @@
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.progressMain);
             this.Controls.Add(this.tbMainInput);
-            this.Controls.Add(this.lblCodesPerMinute);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.cbOverlay);
             this.Controls.Add(this.btnHelp);
@@ -317,7 +306,7 @@
             this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v0.2.1";
+            this.Text = "PIN Utility v0.3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
@@ -340,7 +329,6 @@
         private System.Windows.Forms.ProgressBar progressMain;
         private System.Windows.Forms.TextBox tbMainInput;
         private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Label lblCodesPerMinute;
         private System.Windows.Forms.CheckBox cbOutput;
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.TextBox tbOutput;
