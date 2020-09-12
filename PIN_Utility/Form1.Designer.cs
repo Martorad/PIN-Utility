@@ -51,6 +51,7 @@
             this.btnUp = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.btnLeft = new System.Windows.Forms.Button();
+            this.lblCodeProgress = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -245,6 +246,7 @@
             // 
             // btnDown
             // 
+            this.btnDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDown.Location = new System.Drawing.Point(57, 44);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(49, 24);
@@ -255,6 +257,7 @@
             // 
             // btnUp
             // 
+            this.btnUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUp.Location = new System.Drawing.Point(57, 21);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(49, 22);
@@ -285,12 +288,21 @@
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnAll_Click);
             // 
+            // lblCodeProgress
+            // 
+            this.lblCodeProgress.AutoSize = true;
+            this.lblCodeProgress.Location = new System.Drawing.Point(22, 298);
+            this.lblCodeProgress.Name = "lblCodeProgress";
+            this.lblCodeProgress.Size = new System.Drawing.Size(0, 17);
+            this.lblCodeProgress.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Honeydew;
             this.ClientSize = new System.Drawing.Size(966, 353);
+            this.Controls.Add(this.lblCodeProgress);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.progressMain);
@@ -306,7 +318,7 @@
             this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v0.3";
+            this.Text = "PIN Utility v0.3.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
@@ -342,6 +354,7 @@
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Button btnRight;
         private System.Windows.Forms.Button btnLeft;
+        private System.Windows.Forms.Label lblCodeProgress;
     }
 }
 

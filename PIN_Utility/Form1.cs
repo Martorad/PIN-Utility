@@ -78,6 +78,15 @@ namespace PIN_Utility
             {
                 paths.Add(file.FullName);
             }
+            //using (StreamWriter sw = new StreamWriter(@"C:\Users\marti\Desktop\orderTest2.txt"))
+            //{
+            //    foreach (string str in paths)
+            //    {
+            //        sw.WriteLine(str);
+            //    }
+            //    sw.Close();
+            //    sw.Dispose();
+            //}
 
             try
             {
@@ -175,6 +184,7 @@ namespace PIN_Utility
                     SaveToFile();
                 }
                 newCode = true;
+                lblCodeProgress.Text = $"{completedCodes} / {numberOfCodes}";
                 CheckBtnBackAvailability();
             }
             else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
