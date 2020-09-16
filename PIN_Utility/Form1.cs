@@ -47,7 +47,6 @@ namespace PIN_Utility
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = DateTime.Now.ToString("HH:MM:ss");
             if ((DateTime.Now.Second - startingTime.Second) % 15 == 0  && newCode)
             {
                 SaveToFile();
@@ -78,15 +77,6 @@ namespace PIN_Utility
             {
                 paths.Add(file.FullName);
             }
-            //using (StreamWriter sw = new StreamWriter(@"C:\Users\marti\Desktop\orderTest2.txt"))
-            //{
-            //    foreach (string str in paths)
-            //    {
-            //        sw.WriteLine(str);
-            //    }
-            //    sw.Close();
-            //    sw.Dispose();
-            //}
 
             try
             {
@@ -159,6 +149,7 @@ namespace PIN_Utility
             }
             timer1.Start();
             Size = new Size(984, 400);
+            UpdateProgress();
         }
 
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
@@ -184,7 +175,7 @@ namespace PIN_Utility
                     SaveToFile();
                 }
                 newCode = true;
-                lblCodeProgress.Text = $"{completedCodes} / {numberOfCodes}";
+                UpdateProgress();
                 CheckBtnBackAvailability();
             }
             else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
@@ -219,14 +210,6 @@ namespace PIN_Utility
             tbMainInput.Clear();
             tbMainInput.Text = codes[completedCodes];
             codes.Remove(codes.Last());
-        }
-
-        private void LblTime_Click(object sender, EventArgs e)
-        {
-            if (lblTime.ForeColor == Color.Black)
-                lblTime.ForeColor = Color.Honeydew;
-            else
-                lblTime.ForeColor = Color.Black;
         }
 
         private void CbOutput_CheckedChanged(object sender, EventArgs e)
@@ -437,6 +420,11 @@ namespace PIN_Utility
                 btnBack.Enabled = true;
             else
                 btnBack.Enabled = false;
+        }
+
+        private void UpdateProgress()
+        {
+            lblCodeProgress.Text = $"{completedCodes} / {numberOfCodes}";
         }
     }
 }

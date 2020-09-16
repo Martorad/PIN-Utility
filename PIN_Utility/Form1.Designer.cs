@@ -41,7 +41,6 @@
             this.tbPath = new System.Windows.Forms.TextBox();
             this.progressMain = new System.Windows.Forms.ProgressBar();
             this.tbMainInput = new System.Windows.Forms.TextBox();
-            this.lblTime = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
             this.lblOverlay = new System.Windows.Forms.Label();
             this.cbOverlay = new System.Windows.Forms.CheckBox();
@@ -164,23 +163,13 @@
             this.tbMainInput.TextChanged += new System.EventHandler(this.TbMainInput_TextChanged);
             this.tbMainInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbMainInput_KeyDown);
             // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.ForeColor = System.Drawing.Color.Black;
-            this.lblTime.Location = new System.Drawing.Point(889, 327);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(0, 17);
-            this.lblTime.TabIndex = 4;
-            this.lblTime.Click += new System.EventHandler(this.LblTime_Click);
-            // 
             // btnBack
             // 
             this.btnBack.Enabled = false;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.Location = new System.Drawing.Point(423, 269);
+            this.btnBack.Location = new System.Drawing.Point(423, 270);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(169, 47);
+            this.btnBack.Size = new System.Drawing.Size(169, 74);
             this.btnBack.TabIndex = 6;
             this.btnBack.Text = "<";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -213,9 +202,9 @@
             // btnHelp
             // 
             this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHelp.Location = new System.Drawing.Point(598, 269);
+            this.btnHelp.Location = new System.Drawing.Point(598, 270);
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(169, 47);
+            this.btnHelp.Size = new System.Drawing.Size(169, 74);
             this.btnHelp.TabIndex = 9;
             this.btnHelp.Text = "HELP";
             this.btnHelp.UseVisualStyleBackColor = true;
@@ -224,9 +213,9 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(773, 270);
+            this.btnSave.Location = new System.Drawing.Point(773, 271);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(169, 46);
+            this.btnSave.Size = new System.Drawing.Size(169, 73);
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "SAVE";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -304,7 +293,6 @@
             this.BackColor = System.Drawing.Color.Honeydew;
             this.ClientSize = new System.Drawing.Size(966, 353);
             this.Controls.Add(this.lblCodeProgress);
-            this.Controls.Add(this.lblTime);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.progressMain);
             this.Controls.Add(this.tbMainInput);
@@ -320,7 +308,7 @@
             this.MinimumSize = new System.Drawing.Size(520, 400);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v0.3.2";
+            this.Text = "PIN Utility v0.3.3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
@@ -342,7 +330,6 @@
         private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.ProgressBar progressMain;
         private System.Windows.Forms.TextBox tbMainInput;
-        private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.CheckBox cbOutput;
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.TextBox tbOutput;
