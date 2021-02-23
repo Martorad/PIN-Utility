@@ -62,15 +62,25 @@ namespace PIN_Utility
 
         private void BtnDone_Click(object sender, EventArgs e)
         {
+            lblOverlay.Left -= 7;
+            lblOverlay.Top  -= 9;
+
             if (tbPath.Text == "")
             {
-                MessageBox.Show("Please fill in the path");
+                MessageBox.Show("Please fill in the path.");
                 return;
             }
             else
                 userPath = tbPath.Text;
 
             DirectoryInfo d = new DirectoryInfo(userPath);
+
+            if (d.Exists == false)
+            {
+                MessageBox.Show("The provided path does not exist.");
+                return;
+            }
+
             FileInfo[] Files = d.GetFiles("*.png");
 
             foreach (FileInfo file in Files)

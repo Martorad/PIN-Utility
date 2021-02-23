@@ -61,7 +61,7 @@
             // 
             this.pbMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbMain.Location = new System.Drawing.Point(19, 20);
-            this.pbMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pbMain.Margin = new System.Windows.Forms.Padding(2);
             this.pbMain.Name = "pbMain";
             this.pbMain.Size = new System.Drawing.Size(688, 93);
             this.pbMain.TabIndex = 0;
@@ -82,7 +82,7 @@
             this.pnlMain.Controls.Add(this.tbPath);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
-            this.pnlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlMain.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(724, 293);
             this.pnlMain.TabIndex = 1;
@@ -101,7 +101,7 @@
             // tbOutput
             // 
             this.tbOutput.Location = new System.Drawing.Point(9, 82);
-            this.tbOutput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbOutput.Margin = new System.Windows.Forms.Padding(2);
             this.tbOutput.Name = "tbOutput";
             this.tbOutput.Size = new System.Drawing.Size(359, 20);
             this.tbOutput.TabIndex = 6;
@@ -113,7 +113,7 @@
             this.cbOutput.Checked = true;
             this.cbOutput.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbOutput.Location = new System.Drawing.Point(9, 47);
-            this.cbOutput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbOutput.Margin = new System.Windows.Forms.Padding(2);
             this.cbOutput.Name = "cbOutput";
             this.cbOutput.Size = new System.Drawing.Size(168, 17);
             this.cbOutput.TabIndex = 4;
@@ -124,7 +124,7 @@
             // btnDone
             // 
             this.btnDone.Location = new System.Drawing.Point(9, 236);
-            this.btnDone.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDone.Margin = new System.Windows.Forms.Padding(2);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(358, 42);
             this.btnDone.TabIndex = 5;
@@ -145,7 +145,7 @@
             // tbPath
             // 
             this.tbPath.Location = new System.Drawing.Point(9, 24);
-            this.tbPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbPath.Margin = new System.Windows.Forms.Padding(2);
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(359, 20);
             this.tbPath.TabIndex = 0;
@@ -154,7 +154,7 @@
             // progressMain
             // 
             this.progressMain.Location = new System.Drawing.Point(16, 192);
-            this.progressMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressMain.Margin = new System.Windows.Forms.Padding(2);
             this.progressMain.MarqueeAnimationSpeed = 0;
             this.progressMain.Name = "progressMain";
             this.progressMain.Size = new System.Drawing.Size(690, 22);
@@ -165,7 +165,7 @@
             this.tbMainInput.AcceptsReturn = true;
             this.tbMainInput.Font = new System.Drawing.Font("OcrB", 42F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbMainInput.Location = new System.Drawing.Point(54, 116);
-            this.tbMainInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbMainInput.Margin = new System.Windows.Forms.Padding(2);
             this.tbMainInput.MaxLength = 19;
             this.tbMainInput.Name = "tbMainInput";
             this.tbMainInput.Size = new System.Drawing.Size(633, 71);
@@ -178,7 +178,7 @@
             this.btnBack.Enabled = false;
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.Location = new System.Drawing.Point(317, 219);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(127, 60);
             this.btnBack.TabIndex = 6;
@@ -204,7 +204,7 @@
             this.cbOverlay.Checked = true;
             this.cbOverlay.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbOverlay.Location = new System.Drawing.Point(16, 219);
-            this.cbOverlay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbOverlay.Margin = new System.Windows.Forms.Padding(2);
             this.cbOverlay.Name = "cbOverlay";
             this.cbOverlay.Size = new System.Drawing.Size(84, 17);
             this.cbOverlay.TabIndex = 8;
@@ -216,7 +216,7 @@
             // 
             this.btnHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHelp.Location = new System.Drawing.Point(448, 219);
-            this.btnHelp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnHelp.Margin = new System.Windows.Forms.Padding(2);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(127, 60);
             this.btnHelp.TabIndex = 9;
@@ -228,7 +228,7 @@
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Location = new System.Drawing.Point(580, 220);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(127, 59);
             this.btnSave.TabIndex = 10;
@@ -243,9 +243,9 @@
             this.groupBox1.Controls.Add(this.btnRight);
             this.groupBox1.Controls.Add(this.btnLeft);
             this.groupBox1.Location = new System.Drawing.Point(191, 219);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(122, 60);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
@@ -255,7 +255,7 @@
             // 
             this.btnDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDown.Location = new System.Drawing.Point(43, 36);
-            this.btnDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDown.Margin = new System.Windows.Forms.Padding(2);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(37, 20);
             this.btnDown.TabIndex = 3;
@@ -267,7 +267,7 @@
             // 
             this.btnUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUp.Location = new System.Drawing.Point(43, 17);
-            this.btnUp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUp.Margin = new System.Windows.Forms.Padding(2);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(37, 18);
             this.btnUp.TabIndex = 2;
@@ -279,7 +279,7 @@
             // 
             this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRight.Location = new System.Drawing.Point(81, 17);
-            this.btnRight.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRight.Margin = new System.Windows.Forms.Padding(2);
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(37, 38);
             this.btnRight.TabIndex = 1;
@@ -291,7 +291,7 @@
             // 
             this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLeft.Location = new System.Drawing.Point(4, 17);
-            this.btnLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLeft.Margin = new System.Windows.Forms.Padding(2);
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(37, 38);
             this.btnLeft.TabIndex = 0;
@@ -326,12 +326,12 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximumSize = new System.Drawing.Size(742, 332);
             this.MinimumSize = new System.Drawing.Size(394, 332);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v0.3.3";
+            this.Text = "PIN Utility v0.3.4";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
