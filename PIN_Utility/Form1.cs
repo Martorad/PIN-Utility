@@ -24,6 +24,7 @@ namespace PIN_Utility
         bool userChange = false;
         bool newCode = false;
         bool zenMode = false;
+        bool debugMode = false;
 
         List<string> codes = new List<string>();
         List<string> paths = new List<string>();
@@ -41,7 +42,7 @@ namespace PIN_Utility
             lblOverlay.BackColor = Color.Transparent;
             lblOverlay.Font = new Font(lblOverlay.Font.FontFamily, 40.6f);
             tbMainInput.Font = new Font(tbMainInput.Font.FontFamily, 41.6f);
-            MinimumSize = new Size(394, 332);
+            SetNewWindowSize(394, 332);
 
             Point pt = pbMain.PointToClient(lblOverlay.PointToScreen(new Point(0, 0)));
             lblOverlay.Location = pt;
@@ -51,22 +52,23 @@ namespace PIN_Utility
         {
             if ((DateTime.Now.Second - startingTime.Second) % 15 == 0  && newCode)
             {
-                SaveToFile();
+                SaveToFile(false);
                 newCode = false;
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Size = MinimumSize;
             startingTime = DateTime.Now;
+            gbDebug.Visible = false;
+            gbTextOverlay.Visible = false;
+            gbColor.Visible = false;
+            lblOverlay.Left -= 7;
+            lblOverlay.Top -= 9;
         }
 
         private void BtnDone_Click(object sender, EventArgs e)
         {
-            lblOverlay.Left -= 7;
-            lblOverlay.Top  -= 9;
-
             if (tbPath.Text == "")
             {
                 MessageBox.Show("Please fill in the path.");
@@ -160,51 +162,13 @@ namespace PIN_Utility
                 progressMain.Value = completedCodes;
             }
             timer1.Start();
-            Size = new Size(984, 400);
             UpdateProgress();
 
-            MinimumSize = new Size(742, 332);
-            Size = MinimumSize;
+            SetNewWindowSize(742, 354);
         }
 
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Space)
-            //{
-            //    userChange = true;
-            //}
-            //else if (e.KeyCode == Keys.Enter && tbMainInput.Text.Length == 19)
-            //{
-            //    e.SuppressKeyPress = true;
-            //    codes.Add(tbMainInput.Text);
-            //    Increment(true);
-            //    if (!complete)
-            //        UpdateImage();
-            //    progressMain.Value = completedCodes;
-            //    tbMainInput.Clear();
-            //    if (completedCodes == numberOfCodes)
-            //    {
-            //        complete = true;
-            //        MessageBox.Show("All codes are done!");
-            //        SaveToFile();
-            //    }
-            //    newCode = true;
-            //    UpdateProgress();
-            //    CheckBtnBackAvailability();
-            //}
-            //else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
-            //{
-            //    string temp = tbMainInput.Text;
-            //    temp = temp.Substring(0, temp.Length - 2);
-            //    tbMainInput.Text = temp + " ";
-            //}
-            //else if (e.KeyCode == Keys.M && e.Alt)
-            //{
-            //    e.SuppressKeyPress = true;
-            //    zenMode ^= true;
-            //    UpdateZenMode();
-            //}
-
             switch (e.KeyCode)
             {
                 case Keys.Space:
@@ -224,7 +188,7 @@ namespace PIN_Utility
                         {
                             complete = true;
                             MessageBox.Show("All codes are done!");
-                            SaveToFile();
+                            SaveToFile(false);
                         }
                         newCode = true;
                         UpdateProgress();
@@ -243,15 +207,41 @@ namespace PIN_Utility
                     if (e.Alt)
                     {
                         e.SuppressKeyPress = true;
-                        zenMode ^= true;
-                        UpdateZenMode();
+                        if (debugMode)
+                        {
+                            MessageBox.Show("Cannot turn on minimalist mode while debug mode is active.\n" +
+                                            "Please disable debug mode first.");
+                        }
+                        else
+                        {
+                            zenMode ^= true;
+                            UpdateZenMode();
+                        }
                     }
                     break;
                 case Keys.H:
                     if (e.Alt)
                     {
                         e.SuppressKeyPress = true;
-                        MessageBox.Show("Gaming");
+                        CallHelp();
+                    }
+                    break;
+                case Keys.D:
+                    if (e.Alt)
+                    {
+                        e.SuppressKeyPress = true;
+                        debugMode ^= true;
+                        if (zenMode == true) {
+                            zenMode = false;
+                            UpdateZenMode();
+                        }
+                        UpdateDebugMode();
+                    }
+                    break;
+                case Keys.S:
+                    if (e.Control)
+                    {
+                        SaveToFile(true);
                     }
                     break;
             }
@@ -280,6 +270,7 @@ namespace PIN_Utility
             tbMainInput.Clear();
             tbMainInput.Text = codes[completedCodes];
             codes.Remove(codes.Last());
+            lbEventLog.Items.Add("Went back a code.");
         }
 
         private void CbOutput_CheckedChanged(object sender, EventArgs e)
@@ -310,22 +301,17 @@ namespace PIN_Utility
 
         private void BtnHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Write codes and click Return when done.\n" +
-                "The app will save everything automatically when closing the file.\n" +
-                "Alternatively, you can save manually by clicking the SAVE button.\n" +
-                "\nKnown bugs:\n" +
-                "Pressing space as the first character will cause an exception.\n" +
-                "Opening a saved file to continue working will break the Codes per minute value.");
+            CallHelp();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveToFile();
+            SaveToFile(false);
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            SaveToFile();
+            SaveToFile(true);
         }
 
         private void btnAll_Click(object sender, EventArgs e)
@@ -347,6 +333,83 @@ namespace PIN_Utility
             {
                 lblOverlay.Top += jump;
             }
+        }
+
+        private void radioButtonAll_Click(object sender, EventArgs e)
+        {
+            if (sender == radioButton1)
+            {
+                if (radioButton1.Checked)
+                {
+                    gbTextOverlay.Visible = false;
+                    gbColor.Visible = false;
+                    lblCodeProgress.Visible = true;
+                }
+            }
+            else if (sender == radioButton2)
+            {
+                if (radioButton2.Checked)
+                {
+                    gbTextOverlay.Visible = true;
+                    gbColor.Visible = false;
+                    lblCodeProgress.Visible = false;
+                }
+            }
+            else if (sender == radioButton3)
+            {
+                if (radioButton3.Checked)
+                {
+                    gbTextOverlay.Visible = false;
+                    gbColor.Visible = true;
+                    lblCodeProgress.Visible = false;
+                }
+            }
+        }
+
+        private void textboxColorAll_TextChanged(object sender, EventArgs e)
+        {
+            if (sender == tbR)
+            {
+                if (Convert.ToInt32(tbR.Text) < 0)
+                    tbR.Text = "0";
+                if (Convert.ToInt32(tbR.Text) > 255)
+                    tbR.Text = "255";
+            }
+            else if (sender == tbG)
+            {
+                if (Convert.ToInt32(tbG.Text) < 0)
+                    tbG.Text = "0";
+                if (Convert.ToInt32(tbG.Text) > 255)
+                    tbG.Text = "255";
+            }
+            else if (sender == tbB)
+            {
+                if (Convert.ToInt32(tbB.Text) < 0)
+                    tbB.Text = "0";
+                if (Convert.ToInt32(tbB.Text) > 255)
+                    tbB.Text = "255";
+            }
+        }
+
+        private void btnSubmitColor_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Color newColor = new Color();
+                newColor = Color.FromArgb(Convert.ToInt32(tbR.Text), Convert.ToInt32(tbG.Text), Convert.ToInt32(tbB.Text));
+                lblOverlay.ForeColor = newColor;
+                lbEventLog.Items.Add("Updated color of overlay.");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("RGB values are not in correct format, please use values between 0 and 255.\n" +
+                                exception.Message);
+            }
+        }
+
+        private void BtnClearEventLog_Click(object sender, EventArgs e)
+        {
+            lbEventLog.Items.Clear();
         }
 
         private void UpdateImage()
@@ -445,10 +508,7 @@ namespace PIN_Utility
                         input += ' ';
                     }
                 }
-                catch (IndexOutOfRangeException)
-                {
-
-                }
+                catch (IndexOutOfRangeException) {}
             }
 
             if (input.Length > 19)
@@ -466,7 +526,7 @@ namespace PIN_Utility
             return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ';
         }
 
-        private void SaveToFile()
+        private void SaveToFile(bool manual)
         {
             if (!pnlMain.Visible)
             {
@@ -481,6 +541,14 @@ namespace PIN_Utility
                     writer.Close();
                     writer.Dispose();
                 }
+            }
+            if (manual)
+            {
+                lbEventLog.Items.Add("Manually saved to file at " + DateTime.Now);
+            }
+            else
+            {
+                lbEventLog.Items.Add("Automatically saved to file at " + DateTime.Now);
             }
         }
 
@@ -501,16 +569,49 @@ namespace PIN_Utility
         {
             if (zenMode)
             {
-                MinimumSize = new Size(742, 231);
-                Size = MinimumSize;
+                SetNewWindowSize(742, 231);
                 ControlBox = false;
+                lbEventLog.Items.Add("Switched minimalist mode ON.");
             }
             else
             {
-                MinimumSize = new Size(742, 332);
-                Size = MinimumSize;
+                SetNewWindowSize(742, 354);
                 ControlBox = true;
+                lbEventLog.Items.Add("Switched minimalist mode OFF.");
             }
+        }
+
+        private void UpdateDebugMode()
+        {
+            if (debugMode)
+            {
+                SetNewWindowSize(742, 493);
+                lbEventLog.Items.Add("Switched debug mode ON.");
+            }
+            else
+            {
+                SetNewWindowSize(742, 354);
+                lbEventLog.Items.Add("Switched debug mode OFF.");
+            }
+            gbDebug.Visible = debugMode;
+            lbEventLog.Visible = debugMode;
+        }
+
+        private void CallHelp()
+        {
+            MessageBox.Show("Write codes and click Return when done.\n" +
+                            "The app will save everything automatically when closing.\n" +
+                            "Alternatively, you can save manually by clicking the SAVE button.\n" +
+                            "\nPoweruser keybinds:\n" +
+                            "Alt + M -> Toggle minimalist mode.\n" +
+                            "Alt + D -> Toggle debug mode.\n" +
+                            "Alt + H -> Bring up this window.");
+        }
+
+        private void SetNewWindowSize(int x, int y)
+        {
+            MinimumSize = new Size(x, y);
+            Size = MinimumSize;
         }
     }
 }
