@@ -169,40 +169,91 @@ namespace PIN_Utility
 
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space)
+            //if (e.KeyCode == Keys.Space)
+            //{
+            //    userChange = true;
+            //}
+            //else if (e.KeyCode == Keys.Enter && tbMainInput.Text.Length == 19)
+            //{
+            //    e.SuppressKeyPress = true;
+            //    codes.Add(tbMainInput.Text);
+            //    Increment(true);
+            //    if (!complete)
+            //        UpdateImage();
+            //    progressMain.Value = completedCodes;
+            //    tbMainInput.Clear();
+            //    if (completedCodes == numberOfCodes)
+            //    {
+            //        complete = true;
+            //        MessageBox.Show("All codes are done!");
+            //        SaveToFile();
+            //    }
+            //    newCode = true;
+            //    UpdateProgress();
+            //    CheckBtnBackAvailability();
+            //}
+            //else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
+            //{
+            //    string temp = tbMainInput.Text;
+            //    temp = temp.Substring(0, temp.Length - 2);
+            //    tbMainInput.Text = temp + " ";
+            //}
+            //else if (e.KeyCode == Keys.M && e.Alt)
+            //{
+            //    e.SuppressKeyPress = true;
+            //    zenMode ^= true;
+            //    UpdateZenMode();
+            //}
+
+            switch (e.KeyCode)
             {
-                userChange = true;
-            }
-            else if (e.KeyCode == Keys.Enter && tbMainInput.Text.Length == 19)
-            {
-                e.SuppressKeyPress = true;
-                codes.Add(tbMainInput.Text);
-                Increment(true);
-                if (!complete) 
-                    UpdateImage();
-                progressMain.Value = completedCodes;
-                tbMainInput.Clear();
-                if (completedCodes == numberOfCodes)
-                {
-                    complete = true;
-                    MessageBox.Show("All codes are done!");
-                    SaveToFile();
-                }
-                newCode = true;
-                UpdateProgress();
-                CheckBtnBackAvailability();
-            }
-            else if (e.KeyCode == Keys.Back && tbMainInput.Text.EndsWith(" "))
-            {
-                string temp = tbMainInput.Text;
-                temp = temp.Substring(0, temp.Length - 2);
-                tbMainInput.Text = temp + " ";
-            }
-            else if (e.KeyCode == Keys.M && e.Alt)
-            {
-                e.SuppressKeyPress = true;
-                zenMode ^= true;
-                UpdateZenMode();
+                case Keys.Space:
+                    userChange = true;
+                    break;
+                case Keys.Enter:
+                    if (tbMainInput.Text.Length == 19)
+                    {
+                        e.SuppressKeyPress = true;
+                        codes.Add(tbMainInput.Text);
+                        Increment(true);
+                        if (!complete)
+                            UpdateImage();
+                        progressMain.Value = completedCodes;
+                        tbMainInput.Clear();
+                        if (completedCodes == numberOfCodes)
+                        {
+                            complete = true;
+                            MessageBox.Show("All codes are done!");
+                            SaveToFile();
+                        }
+                        newCode = true;
+                        UpdateProgress();
+                        CheckBtnBackAvailability();
+                    }
+                    break;
+                case Keys.Back:
+                    if (tbMainInput.Text.EndsWith(" "))
+                    {
+                        string temp = tbMainInput.Text;
+                        temp = temp.Substring(0, temp.Length - 2);
+                        tbMainInput.Text = temp + " ";
+                    }
+                    break;
+                case Keys.M:
+                    if (e.Alt)
+                    {
+                        e.SuppressKeyPress = true;
+                        zenMode ^= true;
+                        UpdateZenMode();
+                    }
+                    break;
+                case Keys.H:
+                    if (e.Alt)
+                    {
+                        e.SuppressKeyPress = true;
+                        MessageBox.Show("Gaming");
+                    }
+                    break;
             }
         }
 
