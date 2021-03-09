@@ -23,6 +23,7 @@ namespace PIN_Utility
         bool complete = false;
         bool userChange = false;
         bool newCode = false;
+        bool zenMode = false;
 
         List<string> codes = new List<string>();
         List<string> paths = new List<string>();
@@ -177,7 +178,6 @@ namespace PIN_Utility
                 e.SuppressKeyPress = true;
                 codes.Add(tbMainInput.Text);
                 Increment(true);
-                //MakePath();
                 if (!complete) 
                     UpdateImage();
                 progressMain.Value = completedCodes;
@@ -198,6 +198,12 @@ namespace PIN_Utility
                 temp = temp.Substring(0, temp.Length - 2);
                 tbMainInput.Text = temp + " ";
             }
+            else if (e.KeyCode == Keys.M && e.Alt)
+            {
+                e.SuppressKeyPress = true;
+                zenMode ^= true;
+                UpdateZenMode();
+            }
         }
 
         private void TbMainInput_TextChanged(object sender, EventArgs e)
@@ -217,7 +223,6 @@ namespace PIN_Utility
         private void BtnBack_Click(object sender, EventArgs e)
         {
             Decrement();
-            //MakePath();
             UpdateImage();
             CheckBtnBackAvailability();
             progressMain.Value = completedCodes;
@@ -441,9 +446,20 @@ namespace PIN_Utility
             lblCodeProgress.Text = $"{completedCodes} / {numberOfCodes}";
         }
 
-        private void PnlMain_Paint(object sender, PaintEventArgs e)
+        private void UpdateZenMode()
         {
-
+            if (zenMode)
+            {
+                MinimumSize = new Size(742, 231);
+                Size = MinimumSize;
+                ControlBox = false;
+            }
+            else
+            {
+                MinimumSize = new Size(742, 332);
+                Size = MinimumSize;
+                ControlBox = true;
+            }
         }
     }
 }
