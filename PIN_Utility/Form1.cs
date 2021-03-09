@@ -40,6 +40,7 @@ namespace PIN_Utility
             lblOverlay.BackColor = Color.Transparent;
             lblOverlay.Font = new Font(lblOverlay.Font.FontFamily, 40.6f);
             tbMainInput.Font = new Font(tbMainInput.Font.FontFamily, 41.6f);
+            MinimumSize = new Size(394, 332);
 
             Point pt = pbMain.PointToClient(lblOverlay.PointToScreen(new Point(0, 0)));
             lblOverlay.Location = pt;
@@ -160,6 +161,9 @@ namespace PIN_Utility
             timer1.Start();
             Size = new Size(984, 400);
             UpdateProgress();
+
+            MinimumSize = new Size(742, 332);
+            Size = MinimumSize;
         }
 
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
@@ -435,6 +439,11 @@ namespace PIN_Utility
         private void UpdateProgress()
         {
             lblCodeProgress.Text = $"{completedCodes} / {numberOfCodes}";
+        }
+
+        private void PnlMain_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

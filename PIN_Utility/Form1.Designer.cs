@@ -74,22 +74,24 @@
             // 
             // pnlMain
             // 
+            this.pnlMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.pnlMain.Controls.Add(this.lblOutput);
             this.pnlMain.Controls.Add(this.tbOutput);
             this.pnlMain.Controls.Add(this.cbOutput);
             this.pnlMain.Controls.Add(this.btnDone);
             this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Controls.Add(this.tbPath);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(0, 0);
+            this.pnlMain.Location = new System.Drawing.Point(145, 258);
             this.pnlMain.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(724, 293);
             this.pnlMain.TabIndex = 1;
+            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlMain_Paint);
             // 
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
+            this.lblOutput.ForeColor = System.Drawing.Color.White;
             this.lblOutput.Location = new System.Drawing.Point(9, 66);
             this.lblOutput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblOutput.Name = "lblOutput";
@@ -112,6 +114,7 @@
             this.cbOutput.AutoSize = true;
             this.cbOutput.Checked = true;
             this.cbOutput.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbOutput.ForeColor = System.Drawing.Color.White;
             this.cbOutput.Location = new System.Drawing.Point(9, 47);
             this.cbOutput.Margin = new System.Windows.Forms.Padding(2);
             this.cbOutput.Name = "cbOutput";
@@ -135,6 +138,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(9, 7);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
@@ -203,6 +207,7 @@
             this.cbOverlay.AutoSize = true;
             this.cbOverlay.Checked = true;
             this.cbOverlay.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbOverlay.ForeColor = System.Drawing.Color.White;
             this.cbOverlay.Location = new System.Drawing.Point(16, 219);
             this.cbOverlay.Margin = new System.Windows.Forms.Padding(2);
             this.cbOverlay.Name = "cbOverlay";
@@ -242,6 +247,7 @@
             this.groupBox1.Controls.Add(this.btnUp);
             this.groupBox1.Controls.Add(this.btnRight);
             this.groupBox1.Controls.Add(this.btnLeft);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(191, 219);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
@@ -254,6 +260,7 @@
             // btnDown
             // 
             this.btnDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDown.ForeColor = System.Drawing.Color.Black;
             this.btnDown.Location = new System.Drawing.Point(43, 36);
             this.btnDown.Margin = new System.Windows.Forms.Padding(2);
             this.btnDown.Name = "btnDown";
@@ -266,6 +273,7 @@
             // btnUp
             // 
             this.btnUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUp.ForeColor = System.Drawing.Color.Black;
             this.btnUp.Location = new System.Drawing.Point(43, 17);
             this.btnUp.Margin = new System.Windows.Forms.Padding(2);
             this.btnUp.Name = "btnUp";
@@ -278,6 +286,7 @@
             // btnRight
             // 
             this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRight.ForeColor = System.Drawing.Color.Black;
             this.btnRight.Location = new System.Drawing.Point(81, 17);
             this.btnRight.Margin = new System.Windows.Forms.Padding(2);
             this.btnRight.Name = "btnRight";
@@ -290,6 +299,7 @@
             // btnLeft
             // 
             this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeft.ForeColor = System.Drawing.Color.Black;
             this.btnLeft.Location = new System.Drawing.Point(4, 17);
             this.btnLeft.Margin = new System.Windows.Forms.Padding(2);
             this.btnLeft.Name = "btnLeft";
@@ -302,6 +312,7 @@
             // lblCodeProgress
             // 
             this.lblCodeProgress.AutoSize = true;
+            this.lblCodeProgress.ForeColor = System.Drawing.Color.White;
             this.lblCodeProgress.Location = new System.Drawing.Point(16, 242);
             this.lblCodeProgress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCodeProgress.Name = "lblCodeProgress";
@@ -312,8 +323,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Honeydew;
-            this.ClientSize = new System.Drawing.Size(724, 293);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(726, 293);
             this.Controls.Add(this.lblCodeProgress);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.progressMain);
@@ -327,8 +338,7 @@
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximumSize = new System.Drawing.Size(742, 332);
-            this.MinimumSize = new System.Drawing.Size(394, 332);
+            this.MinimumSize = new System.Drawing.Size(742, 332);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Utility v0.3.4";
