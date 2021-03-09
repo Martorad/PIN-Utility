@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PIN_Utility
@@ -16,7 +12,6 @@ namespace PIN_Utility
         string userPath = "";
         string outputPath = "";
 
-        int[] arrayPIN = new int[3]; //0 is code index. 1 is row index. 2 is page index.
         uint numberOfCodes = 0;
         int completedCodes;
 
@@ -155,7 +150,6 @@ namespace PIN_Utility
                 }
                 else
                 {
-                    //MakePath();
                     UpdateImage();
                     CheckBtnBackAvailability();
                 }
@@ -163,7 +157,7 @@ namespace PIN_Utility
             }
             timer1.Start();
             UpdateProgress();
-
+            UpdateDebugValues();
             SetNewWindowSize(742, 354);
         }
 
@@ -192,6 +186,7 @@ namespace PIN_Utility
                         }
                         newCode = true;
                         UpdateProgress();
+                        UpdateDebugValues();
                         CheckBtnBackAvailability();
                     }
                     break;
@@ -265,6 +260,8 @@ namespace PIN_Utility
         {
             Decrement();
             UpdateImage();
+            UpdateProgress();
+            UpdateDebugValues();
             CheckBtnBackAvailability();
             progressMain.Value = completedCodes;
             tbMainInput.Clear();
@@ -432,17 +429,6 @@ namespace PIN_Utility
         {
             if (!complete)
             {
-                arrayPIN[0]++;
-                if (arrayPIN[0] > 7)
-                {
-                    arrayPIN[0] = 1;
-                    arrayPIN[1]++;
-                }
-                if (arrayPIN[1] > 3)
-                {
-                    arrayPIN[1] = 1;
-                    arrayPIN[2]++;
-                }
                 if (incrementCompletedCodes)
                 {
                     completedCodes++;
@@ -454,20 +440,6 @@ namespace PIN_Utility
         {
             if (completedCodes > 0)
             {
-                if (arrayPIN[0] != 0)
-                {
-                    arrayPIN[0]--;
-                }
-                else if (arrayPIN[1] != 1)
-                {
-                    arrayPIN[1]--;
-                }
-                else
-                {
-                    arrayPIN[2]--;
-                    arrayPIN[1] = 3;
-                    arrayPIN[0] = 7;
-                }
                 completedCodes--;
             }
         }
@@ -595,6 +567,11 @@ namespace PIN_Utility
             }
             gbDebug.Visible = debugMode;
             lbEventLog.Visible = debugMode;
+        }
+
+        private void UpdateDebugValues()
+        {
+            lblFilename.Text = paths[completedCodes];
         }
 
         private void CallHelp()

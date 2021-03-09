@@ -53,6 +53,9 @@
             this.btnLeft = new System.Windows.Forms.Button();
             this.lblCodeProgress = new System.Windows.Forms.Label();
             this.gbDebug = new System.Windows.Forms.GroupBox();
+            this.btnClearEventLog = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lbEventLog = new System.Windows.Forms.ListBox();
             this.lblFilename = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -66,9 +69,6 @@
             this.tbB = new System.Windows.Forms.TextBox();
             this.tbG = new System.Windows.Forms.TextBox();
             this.tbR = new System.Windows.Forms.TextBox();
-            this.lbEventLog = new System.Windows.Forms.ListBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnClearEventLog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.gbTextOverlay.SuspendLayout();
@@ -352,10 +352,38 @@
             this.gbDebug.TabStop = false;
             this.gbDebug.Text = "Debug menu";
             // 
+            // btnClearEventLog
+            // 
+            this.btnClearEventLog.ForeColor = System.Drawing.Color.Black;
+            this.btnClearEventLog.Location = new System.Drawing.Point(305, 54);
+            this.btnClearEventLog.Name = "btnClearEventLog";
+            this.btnClearEventLog.Size = new System.Drawing.Size(94, 69);
+            this.btnClearEventLog.TabIndex = 4;
+            this.btnClearEventLog.Text = "Clear Event log";
+            this.btnClearEventLog.UseVisualStyleBackColor = true;
+            this.btnClearEventLog.Click += new System.EventHandler(this.BtnClearEventLog_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 37);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Event log:";
+            // 
+            // lbEventLog
+            // 
+            this.lbEventLog.FormattingEnabled = true;
+            this.lbEventLog.Location = new System.Drawing.Point(9, 54);
+            this.lbEventLog.Name = "lbEventLog";
+            this.lbEventLog.Size = new System.Drawing.Size(292, 69);
+            this.lbEventLog.TabIndex = 2;
+            // 
             // lblFilename
             // 
             this.lblFilename.AutoSize = true;
-            this.lblFilename.Location = new System.Drawing.Point(72, 20);
+            this.lblFilename.Location = new System.Drawing.Point(68, 20);
             this.lblFilename.Name = "lblFilename";
             this.lblFilename.Size = new System.Drawing.Size(62, 13);
             this.lblFilename.TabIndex = 1;
@@ -366,9 +394,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 20);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.Size = new System.Drawing.Size(63, 13);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Full filename:";
+            this.label5.Text = "Full filepath:";
             // 
             // radioButton1
             // 
@@ -495,34 +523,6 @@
             this.tbR.TabIndex = 0;
             this.tbR.Text = "255";
             this.tbR.TextChanged += new System.EventHandler(this.textboxColorAll_TextChanged);
-            // 
-            // lbEventLog
-            // 
-            this.lbEventLog.FormattingEnabled = true;
-            this.lbEventLog.Location = new System.Drawing.Point(9, 54);
-            this.lbEventLog.Name = "lbEventLog";
-            this.lbEventLog.Size = new System.Drawing.Size(292, 69);
-            this.lbEventLog.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 37);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Event log:";
-            // 
-            // btnClearEventLog
-            // 
-            this.btnClearEventLog.ForeColor = System.Drawing.Color.Black;
-            this.btnClearEventLog.Location = new System.Drawing.Point(305, 54);
-            this.btnClearEventLog.Name = "btnClearEventLog";
-            this.btnClearEventLog.Size = new System.Drawing.Size(94, 69);
-            this.btnClearEventLog.TabIndex = 4;
-            this.btnClearEventLog.Text = "Clear Event log";
-            this.btnClearEventLog.UseVisualStyleBackColor = true;
-            this.btnClearEventLog.Click += new System.EventHandler(this.BtnClearEventLog_Click);
             // 
             // Form1
             // 
