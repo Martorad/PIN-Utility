@@ -41,6 +41,13 @@ namespace PIN_Utility
 
             Point pt = pbMain.PointToClient(lblOverlay.PointToScreen(new Point(0, 0)));
             lblOverlay.Location = pt;
+
+            startingTime = DateTime.Now;
+            gbDebug.Visible = false;
+            gbTextOverlay.Visible = false;
+            gbColor.Visible = false;
+            lblOverlay.Left -= 7;
+            lblOverlay.Top -= 9;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -50,16 +57,6 @@ namespace PIN_Utility
                 SaveToFile(false);
                 newCode = false;
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            startingTime = DateTime.Now;
-            gbDebug.Visible = false;
-            gbTextOverlay.Visible = false;
-            gbColor.Visible = false;
-            lblOverlay.Left -= 7;
-            lblOverlay.Top -= 9;
         }
 
         private void BtnDone_Click(object sender, EventArgs e)
@@ -87,15 +84,7 @@ namespace PIN_Utility
                 paths.Add(file.FullName);
             }
 
-            try
-            {
-                numberOfCodes = (uint)Directory.GetFiles(userPath).Length;
-            }
-            catch (DirectoryNotFoundException dnfe)
-            {
-                MessageBox.Show("Files could not be loaded. Please restart the app and try again.\n" + dnfe.Message);
-                Close();
-            }
+            numberOfCodes = (uint)Directory.GetFiles(userPath).Length;
 
             if (!cbOutput.Checked)
             {
@@ -104,20 +93,13 @@ namespace PIN_Utility
                     MessageBox.Show("Please fill in the output path");
                     return;
                 }
-                else if (!tbOutput.Text.EndsWith(@"\"))
-                {
-                    MessageBox.Show(@"Please make sure the output path ends with \");
-                    return;
-                }
-                else
+                if (tbOutput.Text.EndsWith(@"\") || tbOutput.Text.EndsWith(@"/"))
                     outputPath = tbOutput.Text + "output.txt";
+                else
+                    outputPath = tbOutput.Text + "/output.txt";
             }
             else
                 outputPath = userPath + "/output.txt";
-
-            progressMain.Maximum = (int)numberOfCodes;
-            pnlMain.Visible = false;
-            pnlMain.Enabled = false;
 
             try
             {
@@ -136,10 +118,17 @@ namespace PIN_Utility
                         numberOfCodes--;
                     }
                 }
+                progressMain.Maximum--;
             }
-            catch (FileNotFoundException)
+            catch (Exception exception)
             {
-                completedCodes = 0;
+                if (exception is FileNotFoundException)
+                    completedCodes = 0;
+                else if (exception is DirectoryNotFoundException)
+                {
+                    MessageBox.Show("The output path entered is not valid. Please enter a valid output path.");
+                    return;
+                }
             }
             finally
             {
@@ -148,13 +137,15 @@ namespace PIN_Utility
                     complete = true;
                     MessageBox.Show("This folder is already complete!");
                 }
-                else
-                {
-                    UpdateImage();
-                    CheckBtnBackAvailability();
-                }
+                UpdateImage();
                 progressMain.Value = completedCodes;
+                CheckBtnBackAvailability();
             }
+
+            progressMain.Maximum = (int)numberOfCodes;
+            pnlMain.Visible = false;
+            pnlMain.Enabled = false;
+
             timer1.Start();
             UpdateProgress();
             UpdateDebugValues();
@@ -178,14 +169,15 @@ namespace PIN_Utility
                             UpdateImage();
                         progressMain.Value = completedCodes;
                         tbMainInput.Clear();
+                        UpdateProgress();
                         if (completedCodes == numberOfCodes)
                         {
                             complete = true;
                             MessageBox.Show("All codes are done!");
                             SaveToFile(false);
+                            lbEventLog.Items.Add("Codes completed.");
                         }
                         newCode = true;
-                        UpdateProgress();
                         UpdateDebugValues();
                         CheckBtnBackAvailability();
                     }
@@ -261,6 +253,8 @@ namespace PIN_Utility
             Decrement();
             UpdateImage();
             UpdateProgress();
+            if (complete)
+                complete = false;
             UpdateDebugValues();
             CheckBtnBackAvailability();
             progressMain.Value = completedCodes;
@@ -571,7 +565,8 @@ namespace PIN_Utility
 
         private void UpdateDebugValues()
         {
-            lblFilename.Text = paths[completedCodes];
+            if (!complete)
+                lblFilename.Text = paths[completedCodes];
         }
 
         private void CallHelp()
@@ -580,9 +575,10 @@ namespace PIN_Utility
                             "The app will save everything automatically when closing.\n" +
                             "Alternatively, you can save manually by clicking the SAVE button.\n" +
                             "\nPoweruser keybinds:\n" +
-                            "Alt + M -> Toggle minimalist mode.\n" +
-                            "Alt + D -> Toggle debug mode.\n" +
-                            "Alt + H -> Bring up this window.");
+                            "Alt + M  -> Toggle minimalist mode.\n" +
+                            "Alt + D  -> Toggle debug mode.\n" +
+                            "Alt + H  -> Bring up this window.\n" +
+                            "Ctrl + S -> Manually save.");
         }
 
         private void SetNewWindowSize(int x, int y)
