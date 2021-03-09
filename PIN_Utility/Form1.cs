@@ -9,23 +9,30 @@ namespace PIN_Utility
 {
     public partial class Form1 : Form
     {
+        //Constants used in app.
+        const int autosaveInterval = 15;
+
+        //The path for the PNG files and the output path.
         string userPath = "";
         string outputPath = "";
 
-        uint numberOfCodes = 0;
-        int completedCodes;
+        uint numberOfCodes = 0;  //Total number of codes.
+        int completedCodes;      //Number of codes that the user has entered.
 
-        bool complete = false;
-        bool userChange = false;
-        bool newCode = false;
-        bool zenMode = false;
-        bool debugMode = false;
+        bool complete = false;   //Whether the codes are all entered or not.
+        bool userChange = false; //Whether the change made to the text in the main textbox is from the user or an automatic correction.
+        bool newCode = false;    //Whether there is a new code entered. Used to disable autosave function in case of inactivity to save resources.
+        bool zenMode = false;    //Whether minimalist mode is on.
+        bool debugMode = false;  //Whether debug mode is on.
 
-        List<string> codes = new List<string>();
-        List<string> paths = new List<string>();
+        List<string> codes = new List<string>(); //Stores all entered codes. Used to generate the output file.
+        List<string> paths = new List<string>(); //Stores all paths of the PNG code images.
 
-        DateTime startingTime = new DateTime();
+        DateTime startingTime = new DateTime();  //Used to check the starting time of the app to enable autosave.
 
+        /// <summary>
+        /// Initialize all needed resources for the app.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -50,15 +57,38 @@ namespace PIN_Utility
             lblOverlay.Top -= 9;
         }
 
+        /// <summary>
+        /// Timer used for autosaving every N seconds.
+        /// </summary>
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if ((DateTime.Now.Second - startingTime.Second) % 15 == 0  && newCode)
+            if ((DateTime.Now.Second - startingTime.Second) % autosaveInterval == 0  && newCode)
             {
                 SaveToFile(false);
                 newCode = false;
             }
         }
 
+        /// <summary>
+        /// The checkbox for the output path.
+        /// </summary>
+        private void CbOutput_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!cbOutput.Checked)
+            {
+                tbOutput.Visible = true;
+                lblOutput.Visible = true;
+            }
+            else
+            {
+                tbOutput.Visible = false;
+                lblOutput.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// Whenever the Done button is clicked, accept both input and output paths if valid, check output file existence and update accordingly.
+        /// </summary>
         private void BtnDone_Click(object sender, EventArgs e)
         {
             if (tbPath.Text == "")
@@ -152,6 +182,10 @@ namespace PIN_Utility
             SetNewWindowSize(742, 354);
         }
 
+        /// <summary>
+        /// What happens when a certain key is pressed while the main textbox is highlighted. Used for poweruser keybinds, as well as string formatting.
+        /// </summary>
+        /// <param name="e">The key which the user pressed.</param>
         private void TbMainInput_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -188,6 +222,11 @@ namespace PIN_Utility
                         string temp = tbMainInput.Text;
                         temp = temp.Substring(0, temp.Length - 2);
                         tbMainInput.Text = temp + " ";
+                    }
+                    else if (e.Control)
+                    {
+                        e.SuppressKeyPress = true;
+                        Back();
                     }
                     break;
                 case Keys.M:
@@ -234,6 +273,9 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// Triggers every time the text in the main textbox is changed. Calls CheckText() to format the user input in realtime.
+        /// </summary>
         private void TbMainInput_TextChanged(object sender, EventArgs e)
         {
             tbMainInput.Text = CheckText(tbMainInput.Text);
@@ -248,36 +290,17 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// The "<" button.
+        /// </summary>
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            Decrement();
-            UpdateImage();
-            UpdateProgress();
-            if (complete)
-                complete = false;
-            UpdateDebugValues();
-            CheckBtnBackAvailability();
-            progressMain.Value = completedCodes;
-            tbMainInput.Clear();
-            tbMainInput.Text = codes[completedCodes];
-            codes.Remove(codes.Last());
-            lbEventLog.Items.Add("Went back a code.");
+            Back();
         }
 
-        private void CbOutput_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!cbOutput.Checked)
-            {
-                tbOutput.Visible = true;
-                lblOutput.Visible = true;
-            }
-            else
-            {
-                tbOutput.Visible = false;
-                lblOutput.Visible = false;
-            }
-        }
-
+        /// <summary>
+        /// The checkbox to show the overlay.
+        /// </summary>
         private void CbOverlay_CheckedChanged(object sender, EventArgs e)
         {
             if (cbOverlay.Checked)
@@ -290,21 +313,34 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// The Help button.
+        /// </summary>
         private void BtnHelp_Click(object sender, EventArgs e)
         {
             CallHelp();
         }
 
+        /// <summary>
+        /// Calls to save to file whenever the form is closed by the user, or otherwise closed by the system.
+        /// </summary>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveToFile(false);
         }
 
+        /// <summary>
+        /// The Save button.
+        /// </summary>
         private void BtnSave_Click(object sender, EventArgs e)
         {
             SaveToFile(true);
         }
 
+        /// <summary>
+        /// Adjusts the position of the overlay with X and Y coordinates.
+        /// </summary>
+        /// <param name="sender">Which button called this method.</param>
         private void btnAll_Click(object sender, EventArgs e)
         {
             int jump = Control.ModifierKeys == Keys.Shift ? 3 : 1;
@@ -326,6 +362,10 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// Switches between the three panels shown in the main view of the app.
+        /// </summary>
+        /// <param name="sender">Which radio button called this method.</param>
         private void radioButtonAll_Click(object sender, EventArgs e)
         {
             if (sender == radioButton1)
@@ -357,23 +397,27 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// String formatting for the three textboxes of the RGB values of the overlay. Limits input values between 0 and 255.
+        /// </summary>
+        /// <param name="sender">Which textbox called this method.</param>
         private void textboxColorAll_TextChanged(object sender, EventArgs e)
         {
-            if (sender == tbR)
+            if (sender == tbR && tbR.Text.Length != 0)
             {
                 if (Convert.ToInt32(tbR.Text) < 0)
                     tbR.Text = "0";
                 if (Convert.ToInt32(tbR.Text) > 255)
                     tbR.Text = "255";
             }
-            else if (sender == tbG)
+            else if (sender == tbG && tbG.Text.Length != 0)
             {
                 if (Convert.ToInt32(tbG.Text) < 0)
                     tbG.Text = "0";
                 if (Convert.ToInt32(tbG.Text) > 255)
                     tbG.Text = "255";
             }
-            else if (sender == tbB)
+            else if (sender == tbB && tbB.Text.Length != 0)
             {
                 if (Convert.ToInt32(tbB.Text) < 0)
                     tbB.Text = "0";
@@ -382,6 +426,9 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// The Submit button. Located in the Overlay color panel.
+        /// </summary>
         private void btnSubmitColor_Click(object sender, EventArgs e)
         {
             try
@@ -398,11 +445,17 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// The Clear event log button. Located in the debug menu.
+        /// </summary>
         private void BtnClearEventLog_Click(object sender, EventArgs e)
         {
             lbEventLog.Items.Clear();
         }
 
+        /// <summary>
+        /// Updates the image according to completedCodes. Gets filepath from the paths list.
+        /// </summary>
         private void UpdateImage()
         {
             if (!(completedCodes < numberOfCodes))
@@ -418,7 +471,11 @@ namespace PIN_Utility
                 MessageBox.Show("Could not find " + e.Message);
             }
         }
-
+        
+        /// <summary>
+        /// Increments completed codes.
+        /// </summary>
+        /// <param name="incrementCompletedCodes">Avoids exception when called from automatic output file recognition.</param>
         private void Increment(bool incrementCompletedCodes)
         {
             if (!complete)
@@ -430,6 +487,9 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// Decrements completed codes.
+        /// </summary>
         private void Decrement()
         {
             if (completedCodes > 0)
@@ -438,6 +498,11 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// String formatting of user input.
+        /// </summary>
+        /// <param name="input">The user input, taken from the main textbox.</param>
+        /// <returns>Corrected input. Includes automatic capitalization, character filtering, spacing and character replacement.</returns>
         private string CheckText(string input)
         {
             char lastChar;
@@ -449,7 +514,6 @@ namespace PIN_Utility
             if (lastChar == ' ' && userChange == true)
             {
                 input = input.Remove(input.Length - 1);
-                //userChange = false;
             }
 
             input = input.ToUpper();
@@ -487,11 +551,20 @@ namespace PIN_Utility
             return input;
         }
 
+        /// <summary>
+        /// Sub-method to CheckText(). Used to avoid Cyrillic characters.
+        /// </summary>
+        /// <param name="c">The character to check.</param>
+        /// <returns>A valid character.</returns>
         private bool IsValidCharacter(char c)
         {
             return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ';
         }
 
+        /// <summary>
+        /// Saves to the output file.
+        /// </summary>
+        /// <param name="manual">Whether the save was manual or automatic. Makes different messages in the debug listbox.</param>
         private void SaveToFile(bool manual)
         {
             if (!pnlMain.Visible)
@@ -518,6 +591,28 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// The method for the Back button. Can also be called from a keybind.
+        /// </summary>
+        private void Back()
+        {
+            Decrement();
+            UpdateImage();
+            UpdateProgress();
+            if (complete)
+                complete = false;
+            UpdateDebugValues();
+            CheckBtnBackAvailability();
+            progressMain.Value = completedCodes;
+            tbMainInput.Clear();
+            tbMainInput.Text = codes[completedCodes];
+            codes.Remove(codes.Last());
+            lbEventLog.Items.Add("Went back a code.");
+        }
+
+        /// <summary>
+        /// Checks if the Back button should be enabled or not. Depends on completedCodes.
+        /// </summary>
         private void CheckBtnBackAvailability()
         {
             if (completedCodes > 0)
@@ -526,11 +621,17 @@ namespace PIN_Utility
                 btnBack.Enabled = false;
         }
 
+        /// <summary>
+        /// Updates the progress label.
+        /// </summary>
         private void UpdateProgress()
         {
             lblCodeProgress.Text = $"{completedCodes} / {numberOfCodes}";
         }
 
+        /// <summary>
+        /// Switches between regular and minimalist modes.
+        /// </summary>
         private void UpdateZenMode()
         {
             if (zenMode)
@@ -547,6 +648,9 @@ namespace PIN_Utility
             }
         }
 
+        /// <summary>
+        /// Switches between regular and debug modes.
+        /// </summary>
         private void UpdateDebugMode()
         {
             if (debugMode)
@@ -563,24 +667,36 @@ namespace PIN_Utility
             lbEventLog.Visible = debugMode;
         }
 
+        /// <summary>
+        /// Updates values of labels in the debug menu.
+        /// </summary>
         private void UpdateDebugValues()
         {
             if (!complete)
                 lblFilename.Text = paths[completedCodes];
         }
 
+        /// <summary>
+        /// The method for the Help button. Can also be called from a keybind.
+        /// </summary>
         private void CallHelp()
         {
             MessageBox.Show("Write codes and click Return when done.\n" +
                             "The app will save everything automatically when closing.\n" +
                             "Alternatively, you can save manually by clicking the SAVE button.\n" +
                             "\nPoweruser keybinds:\n" +
-                            "Alt + M  -> Toggle minimalist mode.\n" +
-                            "Alt + D  -> Toggle debug mode.\n" +
-                            "Alt + H  -> Bring up this window.\n" +
-                            "Ctrl + S -> Manually save.");
+                            "Alt + M ----------> Toggle minimalist mode.\n" +
+                            "Alt + D ----------> Toggle debug mode.\n" +
+                            "Alt + H ----------> Bring up this window.\n" +
+                            "Ctrl + S ---------> Manually save.\n" +
+                            "Ctrl + Backspace -> Go back a code.");
         }
 
+        /// <summary>
+        /// Sets the minimum size of the main window and then sets the current size to the new minimum size.
+        /// </summary>
+        /// <param name="x">The X size of the window.</param>
+        /// <param name="y">The Y size of the window.</param>
         private void SetNewWindowSize(int x, int y)
         {
             MinimumSize = new Size(x, y);
