@@ -15,6 +15,7 @@ namespace PIN_Utility
         //The path for the PNG files and the output path.
         string userPath = "";
         string outputPath = "";
+        string formName = "";    //Stores the default name of the main Form. Used for displaying the number of codes in the header of the app.
 
         uint numberOfCodes = 0;  //Total number of codes.
         int completedCodes;      //Number of codes that the user has entered.
@@ -55,6 +56,8 @@ namespace PIN_Utility
             gbColor.Visible = false;
             lblOverlay.Left -= 7;
             lblOverlay.Top -= 9;
+
+            formName = Text;
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace PIN_Utility
         /// </summary>
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if ((DateTime.Now.Second - startingTime.Second) % autosaveInterval == 0  && newCode)
+            if ((DateTime.Now.Second - startingTime.Second) % autosaveInterval == 0 && newCode)
             {
                 SaveToFile(false);
                 newCode = false;
@@ -115,6 +118,7 @@ namespace PIN_Utility
             }
 
             numberOfCodes = (uint)Directory.GetFiles(userPath).Length;
+            progressMain.Maximum = (int)numberOfCodes;
 
             if (!cbOutput.Checked)
             {
@@ -131,7 +135,7 @@ namespace PIN_Utility
             else
                 outputPath = userPath + "/output.txt";
 
-            try
+            try //Try to open the output file.
             {
                 using (StreamReader reader = new StreamReader(outputPath))
                 {
@@ -150,7 +154,7 @@ namespace PIN_Utility
                 }
                 progressMain.Maximum--;
             }
-            catch (Exception exception)
+            catch (Exception exception) //If the file doesn't exist.
             {
                 if (exception is FileNotFoundException)
                     completedCodes = 0;
@@ -213,6 +217,7 @@ namespace PIN_Utility
                         }
                         newCode = true;
                         UpdateDebugValues();
+                        UpdateZenMode(false);
                         CheckBtnBackAvailability();
                     }
                     break;
@@ -241,7 +246,7 @@ namespace PIN_Utility
                         else
                         {
                             zenMode ^= true;
-                            UpdateZenMode();
+                            UpdateZenMode(true);
                         }
                     }
                     break;
@@ -259,7 +264,7 @@ namespace PIN_Utility
                         debugMode ^= true;
                         if (zenMode == true) {
                             zenMode = false;
-                            UpdateZenMode();
+                            UpdateZenMode(true);
                         }
                         UpdateDebugMode();
                     }
@@ -405,24 +410,45 @@ namespace PIN_Utility
         {
             if (sender == tbR && tbR.Text.Length != 0)
             {
-                if (Convert.ToInt32(tbR.Text) < 0)
-                    tbR.Text = "0";
-                if (Convert.ToInt32(tbR.Text) > 255)
-                    tbR.Text = "255";
+                try
+                {
+                    if (Convert.ToInt32(tbR.Text) < 0)
+                        tbR.Text = "0";
+                    if (Convert.ToInt32(tbR.Text) > 255)
+                        tbR.Text = "255";
+                }
+                catch (FormatException)
+                {
+                    tbR.Text = "";
+                }
             }
             else if (sender == tbG && tbG.Text.Length != 0)
             {
-                if (Convert.ToInt32(tbG.Text) < 0)
+                try
+                {
+                    if (Convert.ToInt32(tbG.Text) < 0)
                     tbG.Text = "0";
-                if (Convert.ToInt32(tbG.Text) > 255)
-                    tbG.Text = "255";
+                    if (Convert.ToInt32(tbG.Text) > 255)
+                        tbG.Text = "255";
+                }
+                catch (FormatException)
+                {
+                    tbG.Text = "";
+                }
             }
             else if (sender == tbB && tbB.Text.Length != 0)
             {
-                if (Convert.ToInt32(tbB.Text) < 0)
-                    tbB.Text = "0";
-                if (Convert.ToInt32(tbB.Text) > 255)
-                    tbB.Text = "255";
+                try
+                {
+                    if (Convert.ToInt32(tbB.Text) < 0)
+                        tbB.Text = "0";
+                    if (Convert.ToInt32(tbB.Text) > 255)
+                        tbB.Text = "255";
+                }
+                catch (FormatException)
+                {
+                    tbB.Text = "";
+                }
             }
         }
 
@@ -632,19 +658,28 @@ namespace PIN_Utility
         /// <summary>
         /// Switches between regular and minimalist modes.
         /// </summary>
-        private void UpdateZenMode()
+        /// <param name="updateAll">Whether to update all parameters, or just the main form text.</param>
+        private void UpdateZenMode(bool updateAll)
         {
             if (zenMode)
             {
-                SetNewWindowSize(742, 231);
-                ControlBox = false;
-                lbEventLog.Items.Add("Switched minimalist mode ON.");
+                if (updateAll)
+                {
+                    SetNewWindowSize(742, 231);
+                    ControlBox = false;
+                    lbEventLog.Items.Add("Switched minimalist mode ON.");
+                }
+                Text = $"{completedCodes} / {numberOfCodes}";
             }
             else
             {
-                SetNewWindowSize(742, 354);
-                ControlBox = true;
-                lbEventLog.Items.Add("Switched minimalist mode OFF.");
+                if (updateAll)
+                {
+                    SetNewWindowSize(742, 354);
+                    ControlBox = true;
+                    lbEventLog.Items.Add("Switched minimalist mode OFF.");
+                }
+                Text = formName;
             }
         }
 
