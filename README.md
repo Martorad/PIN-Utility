@@ -1,5 +1,5 @@
 # PIN Utility
-![logo](PIN.png)
+<a href="#"><img src="PIN.ico" align="left" height="128" width="128" ></a>
 
 PIN Utility is an app that has been in ongoing development by me since the 4th of August, 2020. It is an app that came out of necessity. It is extremely specialized to do a single job and to do it well.
 ### 1. Context
