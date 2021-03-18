@@ -2,6 +2,7 @@
 <a href="#"><img src="PIN.ico" align="left" height="128" width="128" ></a>
 
 PIN Utility is an app that has been in ongoing development by me since the 4th of August, 2020. It is an app that came out of necessity. It is extremely specialized to do a single job and to do it well.
+
 ### 1. Context
 
 How do you enter a very large quantity of codes in picture format into a text-based database? Surely, the first thing that comes to mind is Optical Character Recognition (OCR). Now, what if the margin for error of these codes is none. Your average Tesseract OCR distro can run at an accuracy of 85%. Do some pre-formatting on your images, and you can get that up to 95%. Do some basic machine learning and you can go up to 99%+ accuracy. But that still isn't enough. This is where PIN Utility comes in.
