@@ -552,7 +552,7 @@
             this.MinimumSize = new System.Drawing.Size(742, 332);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v1.0.h1";
+            this.Text = "PIN Utility v1.0.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
