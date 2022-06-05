@@ -69,6 +69,7 @@
             this.tbB = new System.Windows.Forms.TextBox();
             this.tbG = new System.Windows.Forms.TextBox();
             this.tbR = new System.Windows.Forms.TextBox();
+            this.cbFastMode = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.gbTextOverlay.SuspendLayout();
@@ -525,6 +526,18 @@
             this.tbR.Text = "255";
             this.tbR.TextChanged += new System.EventHandler(this.textboxColorAll_TextChanged);
             // 
+            // cbFastMode
+            // 
+            this.cbFastMode.AutoSize = true;
+            this.cbFastMode.ForeColor = System.Drawing.Color.White;
+            this.cbFastMode.Location = new System.Drawing.Point(106, 219);
+            this.cbFastMode.Name = "cbFastMode";
+            this.cbFastMode.Size = new System.Drawing.Size(75, 17);
+            this.cbFastMode.TabIndex = 18;
+            this.cbFastMode.Text = "Fast mode";
+            this.cbFastMode.UseVisualStyleBackColor = true;
+            this.cbFastMode.CheckedChanged += new System.EventHandler(this.cbFastMode_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,6 +545,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(726, 454);
             this.Controls.Add(this.pnlMain);
+            this.Controls.Add(this.cbFastMode);
             this.Controls.Add(this.gbColor);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
@@ -552,7 +566,7 @@
             this.MinimumSize = new System.Drawing.Size(742, 332);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PIN Utility v1.0.2";
+            this.Text = "PIN Utility v1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
@@ -608,6 +622,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ListBox lbEventLog;
         private System.Windows.Forms.Button btnClearEventLog;
+        private System.Windows.Forms.CheckBox cbFastMode;
     }
 }
 

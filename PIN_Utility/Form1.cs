@@ -25,6 +25,7 @@ namespace PIN_Utility
         bool newCode = false;    //Whether there is a new code entered. Used to disable autosave function in case of inactivity to save resources.
         bool zenMode = false;    //Whether minimalist mode is on.
         bool debugMode = false;  //Whether debug mode is on.
+        bool bckspcPrs = false;  //Whether backspace was pressed recently. Used to make auto-enter feature work correctly.
 
         List<string> codes = new List<string>(); //Stores all entered codes. Used to generate the output file.
         List<string> paths = new List<string>(); //Stores all paths of the PNG code images.
@@ -276,6 +277,7 @@ namespace PIN_Utility
                     }
                     break;
             }
+            bckspcPrs = false;
         }
 
         /// <summary>
@@ -292,6 +294,13 @@ namespace PIN_Utility
             else
             {
                 userChange = false;
+            }
+
+            if (cbFastMode.Checked && tbMainInput.Text.Length == 19 && !bckspcPrs)
+            {
+                object temp = new object();
+                KeyEventArgs Enter = new KeyEventArgs(Keys.Enter);
+                TbMainInput_KeyDown(temp, Enter);
             }
         }
 
@@ -622,6 +631,7 @@ namespace PIN_Utility
         /// </summary>
         private void Back()
         {
+            bckspcPrs = true;
             Decrement();
             UpdateImage();
             UpdateProgress();
@@ -736,6 +746,11 @@ namespace PIN_Utility
         {
             MinimumSize = new Size(x, y);
             Size = MinimumSize;
+        }
+
+        private void cbFastMode_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
