@@ -536,7 +536,6 @@
             this.cbFastMode.TabIndex = 18;
             this.cbFastMode.Text = "Fast mode";
             this.cbFastMode.UseVisualStyleBackColor = true;
-            this.cbFastMode.CheckedChanged += new System.EventHandler(this.cbFastMode_CheckedChanged);
             // 
             // Form1
             // 

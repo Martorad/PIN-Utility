@@ -747,10 +747,5 @@ namespace PIN_Utility
             MinimumSize = new Size(x, y);
             Size = MinimumSize;
         }
-
-        private void cbFastMode_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
